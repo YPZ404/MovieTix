@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Password:</label>
                          <div class="col-sm-4">
-                         <input type="text" name="password" class="form-control" id="password" value="{{ staff.password }}">
+                         <input type="text" name="password" class="form-control" id="password" placeholder="keep empty means not chane password">
                              <small class="error-message" style="color: red"></small>
                          </div>
                     </div>
@@ -60,11 +60,15 @@
                          {% if staff.level == 0 %}
                              <option selected="selected" value="staff">Staff</option>
                              <option value="manager">Manager</option>
+                             <option value="admin">Admin</option>
                          {% elif staff.level == 1 %}
                              <option value="staff">Staff</option>
                              <option selected="selected" value="manager">Manager</option>
-                          {% elif staff.level == 2 %}
                              <option value="admin">Admin</option>
+                          {% elif staff.level == 2 %}
+                             <option value="staff">Staff</option>
+                             <option value="manager">Manager</option>
+                             <option selected="selected" value="admin">Admin</option>
                         {% endif %}
                     </select>
 
@@ -114,10 +118,7 @@
                     const emailValue = email.value.trim();
                     const err = [];
 
-                     if (passwordValue == ""){
-                        setError(password,"the password cannot be empty")
-                        err.push("error")
-                    }else if(passwordValue.length < 8){
+                    if(passwordValue.length > 0 && passwordValue.length < 8){
                         err.push("error")
                         setError(password,"the length of password must be larger than 8 characters")
                     }else {

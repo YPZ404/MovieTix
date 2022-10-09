@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from my_admin.models import Staff
 from django.core.paginator import Paginator
 from datetime import datetime
+import hashlib
 import string
 
 
@@ -61,13 +62,21 @@ def insert(request):
                 break
             else:
                 continue
-        ob.password = "12345678"
+
+        md5 = hashlib.md5()
+        n = random.randint(100000, 999999)
+        password_seed = "12345678"+str(n)
+        md5.update(password_seed.encode('utf-8'))
+        ob.password_hash = md5.hexdigest()
+        ob.password_salt = n
         ob.name = request.POST['name']
         level = request.POST['level']
         if level == "staff":
             ob.level = 0
         elif level == "manager":
             ob.level = 1
+        elif level == "admin":
+            ob.level = 2
         else:
             context = {'info': "Add new staff fails, invalid level"}
             return render(request, 'my_admin/info.html', context)
@@ -112,12 +121,19 @@ def update(request):
         staffId = request.POST["staffId"]
         ob = Staff.objects.get(staff_id=staffId)
         ob.name = request.POST['name']
-        ob.password = request.POST['password']
+        password = request.POST['password']
+        password_salt = ob.password_salt
+        password_seed = password + password_salt
+        md5 = hashlib.md5()
+        md5.update(password_seed.encode('utf-8'))
+        ob.password_hash = md5.hexdigest()
         level = request.POST['level']
         if level == "staff":
             ob.level = 0
         elif level == "manager":
             ob.level = 1
+        elif level == "admin":
+            ob.level = 2
         else:
             context = {'info': "update staff info fails, invalid level"}
             return render(request, 'my_admin/info.html', context)

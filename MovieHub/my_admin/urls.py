@@ -11,6 +11,7 @@ urlpatterns = [
     path('loadLogin', index.loadLogin, name="admin_load_login"),
     path('login', index.login, name="admin_login"),
     path('logout', index.logout, name="admin_logout"),
+    path('verify', index.verify, name="admin_verify"),
 
     # staff information management
     path('staff/<int:pIndex>', staff.index, name="admin_staff_index"),
