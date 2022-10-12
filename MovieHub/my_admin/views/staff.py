@@ -29,7 +29,7 @@ def index(request, pIndex=1):
 
     # In page by 10 record
     pIndex = int(pIndex)
-    page = Paginator(staffList, 5)
+    page = Paginator(staffList, 10)
     maxPages = page.num_pages
     if pIndex > maxPages:
         pIndex = maxPages

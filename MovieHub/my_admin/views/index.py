@@ -4,6 +4,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
 
+
 from my_admin.models import Staff
 # Create your views here.
 from django.http import HttpResponse
