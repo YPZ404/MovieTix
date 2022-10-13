@@ -61,3 +61,18 @@ class Movie(models.Model):
 
     class Meta:
         db_table = "Movie"
+
+
+class Announcement(models.Model):
+    announcement_id = models.IntegerField()
+    content = models.CharField(max_length=255)
+    create_time = models.DateTimeField(default=datetime.now)
+    update_time = models.DateTimeField(default=datetime.now)
+
+    def toDict(self):
+        return {'announcement_id': self.announcement_id, 'content': self.content,
+                'create_time': self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'update_time': self.update_time.strftime('%Y-%m-%d %H:%M:%S')}
+
+    class Meta:
+        db_table = "Announcement"
