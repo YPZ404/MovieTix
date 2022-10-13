@@ -66,7 +66,7 @@ def insert(request):
             context = {'info': "Add new movie fails,no poster upload"}
             return render(request, 'my_admin/info.html', context)
         poster = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "." + posterFile.name.split('.').pop()
-        destination = open("./static/uploads/movie/" + poster, "wb+")
+        destination = open("./static/uploads/movie_pic/" + poster, "wb+")
         for chunk in posterFile.chunks():
             destination.write(chunk)
         destination.close()
