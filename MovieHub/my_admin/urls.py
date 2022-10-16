@@ -4,6 +4,7 @@ from my_admin.views import index
 from my_admin.views import staff
 from my_admin.views import room
 from my_admin.views import movie
+from my_admin.views import announcement
 
 urlpatterns = [
     # admin home page
@@ -36,4 +37,11 @@ urlpatterns = [
     path('movie/insert', movie.insert, name="admin_movie_insert"),
     path('movie/edit/<int:movieId>', movie.edit, name="admin_movie_edit"),
     path('movie/update/', movie.update, name="admin_movie_update"),
+
+    # announcement information management
+    path('announcement/<int:pIndex>', announcement.index, name="admin_announcement_index"),
+    path('announcement/add', announcement.add, name="admin_announcement_add"),
+    path('announcement/insert', announcement.insert, name="admin_announcement_insert"),
+    path('announcement/delete/<int:announcementId>', announcement.delete, name="admin_announcement_delete"),
+
 ]
