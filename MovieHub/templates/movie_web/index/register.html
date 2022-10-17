@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Customer Login Page</title>
+  <title>Customer register Page</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{% static 'movie_web/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'movie_web/bower_components/font-awesome/css/font-awesome.min.css' %}">
@@ -18,16 +18,16 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="{% static 'movie_web/local/css/google_fonts.css' %}">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{% url 'customer_login' %}"><b>MovieHub Login</b></a>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="{% url 'customer_register' %}"><b>MovieHub Register</b></a>
   </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg" style="color:red">{{ info }}</p>
+  <!-- /.register-logo -->
+  <div class="register-box-body">
+    <p class="register-box-msg" style="color:red">{{ info }}</p>
 
-    <form action="{% url 'customer_login' %}" method="post">
+    <form action="{% url 'customer_do_register' %}" method="post">
         {% csrf_token %}
       <div class="form-group has-feedback">
         <input type="text" name="username" class="form-control" placeholder="Username">
@@ -38,6 +38,14 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
+        <input type="text" name="name" class="form-control" placeholder="Real name">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" name="email" class="form-control" placeholder="Email">
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
         <input type="text" name="verifyCode" class="form-control" style="width:150px" placeholder="Verify Code">
         <span class="form-control-feedback" style="width:150px">
             <img src="{% url 'customer_verify' %}"/>
@@ -45,9 +53,8 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button type="submit" class="btn btn-primary" style="width:100px">Login</button>
-          <a href="{% url 'customer_register' %}"> 
-            <button type="button" class="btn btn-primary" style="width:100px">Register</button>
+          <a href="{% url 'customer_do_register' %}"> 
+            <button type="submit" class="btn btn-primary" style="width:100px; margin-right:100px;">Register</button>
           </a>
           <a href="{% url 'welcome' %}"> 
             <button type="button" class="btn btn-primary" style="width:100px">Cancel</button>
@@ -58,9 +65,9 @@
     </form>
 
   </div>
-  <!-- /.login-box-body -->
+  <!-- /.register-box-body -->
 </div>
-<!-- /.login-box -->
+<!-- /.register-box -->
 
 <!-- jQuery 3 -->
 <script src="{% static 'movie_web/bower_components/jquery/dist/jquery.min.js' %}"></script>

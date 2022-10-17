@@ -15,10 +15,46 @@ from my_admin.models import Announcement
 def index(request):
     return HttpResponse("Welcome to MoiveHub")
 
-# User Register
+# Load user register form
 def register(request):
-    return HttpResponse("Register")
+    return render(request, "movie_web/index/register.html")
 
+# Do register
+def doRegister(request):
+    try:
+        ob = Customer()
+        username = request.POST["username"]
+        password = request.POST["password"]
+        print(username)
+
+        # Existing username
+        try:
+            customer = Customer.objects.get(username = username)
+        except Exception as err:
+            ob.username = username
+        else:
+            context = {'info': 'username already exists'}
+            return render(request, "movie_web/index/register.html", context)
+
+        if request.POST["verifyCode"] != request.session["verifyCode"]:
+            context = {'info': 'verify code is wrong'}
+            return render(request, "movie_web/index/register.html", context)
+        
+        n = random.randint(100000, 999999)
+        ob.password_salt = n
+        md5 = hashlib.md5()
+        password_seed = password + str(n)
+        md5.update(password_seed.encode('utf-8'))
+        ob.password_hash = md5.hexdigest()
+
+        ob.name = request.POST['name']
+        ob.email = request.POST['email']
+        ob.save()
+        return render(request, 'movie_web/index/loadLogin.html')
+    except Exception as err:
+        print(err)
+        context = {'info': "Register fails"}
+    return render(request, 'movie_web/index/register.html', context)
 
 # Load user login form
 def loadLogin(request):

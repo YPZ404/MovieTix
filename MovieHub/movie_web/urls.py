@@ -8,6 +8,7 @@ urlpatterns = [
 
     # register, login, and logout
     path('register', index.register, name = "customer_register"),
+    path('doRegister', index.doRegister, name = "customer_do_register"),
     path('loadLogin', index.loadLogin, name="customer_load_login"),
     path('login', index.login, name="customer_login"),
     path('logout', index.logout, name="customer_logout"),
