@@ -11,7 +11,7 @@ from datetime import datetime
 # browse announcement information
 def index(request, pIndex=1):
     model = Announcement.objects
-    announcementList = model.all()
+    announcementList = model.all().order_by('-create_time')
     keyWord = request.GET.get("keyword", None)
     condition = []
 

@@ -15,7 +15,10 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Movie List</h3>
+              <h3 class="box-title">
+                  Movie List &nbsp;&nbsp;
+                  <small>click movie name to see the current release number</small>
+              </h3>
 
               <div class="box-tools">
                <form action="{% url 'admin_movie_index' 1 %}" method="get">
@@ -35,6 +38,7 @@
                   <th>Movie ID</th>
                   <th>Movie Name</th>
                   <th>Poster</th>
+                    <th>Duration</th>
                   <th>Type</th>
                   <th>Cast</th>
                     <th>Introduction</th>
@@ -43,8 +47,9 @@
                  {% for vo in movieList %}
                 <tr>
                   <td>{{ vo.movie_id }}</td>
-                  <td>{{ vo.movie_name }}</td>
+                  <td onclick="doc({{ vo.movie_id }})">{{ vo.movie_name }}</td>
                     <td><img src="/static/uploads/movie_pic/{{ vo.poster }}" width="60"/></td>
+                    <td>{{ vo.duration }}</td>
                     <td>{{ vo.type }}</td>
                     <td>{{ vo.cast }}</td>
                     <td width="300">{{ vo.introduction }}</td>

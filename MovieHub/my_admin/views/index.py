@@ -3,16 +3,28 @@ from django.urls import reverse
 import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
-
+from my_admin.models import Staff
 
 from my_admin.models import Staff
+from my_admin.models import Announcement
+from datetime import datetime, timedelta
 # Create your views here.
 from django.http import HttpResponse
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'my_admin/index/index.html')
+    staffs = Staff.objects
+    numOfStaff = staffs.all().__len__()
+
+    now = datetime.now()
+    zeroToday = now - timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,
+                                microseconds=now.microsecond)
+    announcements = Announcement.objects
+    todayAnnouncement = announcements.all().filter(create_time__gte=zeroToday).__len__()
+    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement}
+
+    return render(request, 'my_admin/index/homepage.html', context)
 
 
 def loadLogin(request):
@@ -25,14 +37,14 @@ def login(request):
         password = request.POST["password"]
         ob = Staff.objects.get(staff_id=staffId)
         md5 = hashlib.md5()
-        password_seed = request.POST["password"]+ob.password_salt
+        password_seed = request.POST["password"] + ob.password_salt
         md5.update(password_seed.encode('utf-8'))
         if request.POST["verifyCode"] != request.session["verifyCode"]:
             context = {'info': 'verify code is wrong'}
             return render(request, "my_admin/index/loadLogin.html", context)
         if md5.hexdigest() == ob.password_hash and ob.level == 2:
             request.session['adminuser'] = ob.toDict()
-            return redirect(reverse('admin_index'))
+            return redirect(reverse('admin_homepage'))
         elif md5.hexdigest() == ob.password_hash and ob.level != 2:
             context = {'info': 'no permission'}
         else:
@@ -50,7 +62,7 @@ def logout(request):
 
 
 def verify(request):
-    bgcolor = (242,164,247)
+    bgcolor = (242, 164, 247)
     width = 100
     height = 25
     im = Image.new('RGB', (width, height), bgcolor)

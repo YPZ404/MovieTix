@@ -47,6 +47,7 @@ class Movie(models.Model):
     movie_id = models.IntegerField()
     movie_name = models.CharField(max_length=40)
     poster = models.CharField(max_length=255)
+    duration = models.IntegerField()
     type = models.CharField(max_length=20)
     cast = models.CharField(max_length=100)
     introduction = models.CharField(max_length=100)
@@ -55,6 +56,7 @@ class Movie(models.Model):
 
     def toDict(self):
         return {'movie_id': self.movie_id, 'movie_name': self.movie_name, 'poster': self.poster,
+                'duration': self.duration,
                 'type': self.type, 'cast': self.cast, 'introduction': self.introduction,
                 'create_time': self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
                 'update_time': self.update_time.strftime('%Y-%m-%d %H:%M:%S')}
@@ -76,3 +78,25 @@ class Announcement(models.Model):
 
     class Meta:
         db_table = "Announcement"
+
+
+class Release(models.Model):
+    release_id = models.IntegerField()
+    movie_id = models.IntegerField()
+    room_id = models.IntegerField()
+    release_time = models.DateTimeField(default=datetime.now)
+    is_delete = models.IntegerField()
+    create_time = models.DateTimeField(default=datetime.now)
+    update_time = models.DateTimeField(default=datetime.now)
+
+    def toDict(self):
+        return {'release_id': self.release_id, 'movie_id': self.movie_id, 'room_id': self.room_id,
+                'is_delete': self.is_delete,
+                'release_time': self.release_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'create_time': self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'update_time': self.update_time.strftime('%Y-%m-%d %H:%M:%S')}
+
+    class Meta:
+        db_table = "Release"
+
+

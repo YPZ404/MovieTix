@@ -5,10 +5,11 @@ from my_admin.views import staff
 from my_admin.views import room
 from my_admin.views import movie
 from my_admin.views import announcement
+from my_admin.views import release
 
 urlpatterns = [
     # admin home page
-    path('', index.index, name="admin_index"),
+    path('', index.index, name="admin_homepage"),
 
     # login logout
     path('loadLogin', index.loadLogin, name="admin_load_login"),
@@ -37,11 +38,19 @@ urlpatterns = [
     path('movie/insert', movie.insert, name="admin_movie_insert"),
     path('movie/edit/<int:movieId>', movie.edit, name="admin_movie_edit"),
     path('movie/update/', movie.update, name="admin_movie_update"),
+    path('movie/checkReleaseNum/<int:movieId>', movie.checkReleaseNum, name="admin_movie_check_release"),
 
     # announcement information management
     path('announcement/<int:pIndex>', announcement.index, name="admin_announcement_index"),
     path('announcement/add', announcement.add, name="admin_announcement_add"),
     path('announcement/insert', announcement.insert, name="admin_announcement_insert"),
     path('announcement/delete/<int:announcementId>', announcement.delete, name="admin_announcement_delete"),
+
+    # release info management
+    path('release/<int:pIndex>', release.index, name="admin_release_index"),
+    path('release/edit/<int:releaseId>', release.edit, name="admin_release_edit"),
+    path('release/update/', release.update, name="admin_release_update"),
+    path('release/delete/<int:releaseId>', release.delete, name="admin_release_delete"),
+
 
 ]

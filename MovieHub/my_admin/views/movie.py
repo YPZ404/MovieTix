@@ -4,8 +4,9 @@ from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from my_admin.models import Movie
+from my_admin.models import Release
 from django.core.paginator import Paginator
 from datetime import datetime
 import hashlib
@@ -73,6 +74,7 @@ def insert(request):
 
         ob.movie_name = request.POST['name']
         ob.poster = poster
+        ob.duration = request.POST['duration']
         ob.type = request.POST['type']
         ob.cast = request.POST['cast']
         ob.introduction = request.POST['introduction']
@@ -98,12 +100,23 @@ def edit(request, movieId=0):
     return render(request, 'my_admin/info.html', context)
 
 
+def checkReleaseNum(request, movieId=0):
+    num = Release.objects.filter(movie_id=movieId, release_time__gt=datetime.now()).__len__()
+    '''
+    list = []
+    for ob in releaseList:
+        list.append({'release_time': ob.release_time, 'room_id': ob.room_id})
+    '''
+    return JsonResponse({'number': num})
+
+
 # update staff information action
 def update(request):
     try:
         movieId = request.POST["movieId"]
         ob = Movie.objects.get(movie_id=movieId)
         ob.movie_name = request.POST['name']
+        ob.duration = request.POST['duration']
         ob.type = request.POST['type']
         ob.cast = request.POST['cast']
         ob.introduction = request.POST['introduction']
