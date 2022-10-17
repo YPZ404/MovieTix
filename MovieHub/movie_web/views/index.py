@@ -4,6 +4,7 @@ from django.urls import reverse
 import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
+import re
 from movie_web.models import Customer
 
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ def doRegister(request):
         ob = Customer()
         username = request.POST["username"]
         password = request.POST["password"]
-        print(username)
+        name = request.POST['name']
+        email = request.POST['email']
 
         # Existing username
         try:
@@ -35,7 +37,17 @@ def doRegister(request):
         else:
             context = {'info': 'username already exists'}
             return render(request, "movie_web/index/register.html", context)
-
+        
+        # Invalid input
+        if not re.search(u'^[_a-zA-Z0-9\u4e00-\u9fa5]+$', username) or len(username)==0 or len(username)>20:
+            context = {'info': 'Username must be invalid within 20 characters'}
+            return render(request, "movie_web/index/register.html", context)
+        if not re.search(u'^[A-Za-z]+$', name) or len(name)==0 or len(name)>20:
+            context = {'info': 'Name must be invalid within 20 characters'}
+            return render(request, "movie_web/index/register.html", context)
+        if not re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email):
+            context = {'info': 'Email is invalid'}
+            return render(request, "movie_web/index/register.html", context)
         if request.POST["verifyCode"] != request.session["verifyCode"]:
             context = {'info': 'verify code is wrong'}
             return render(request, "movie_web/index/register.html", context)
@@ -46,9 +58,8 @@ def doRegister(request):
         password_seed = password + str(n)
         md5.update(password_seed.encode('utf-8'))
         ob.password_hash = md5.hexdigest()
-
-        ob.name = request.POST['name']
-        ob.email = request.POST['email']
+        ob.name = name
+        ob.email = email
         ob.save()
         return render(request, 'movie_web/index/loadLogin.html')
     except Exception as err:
