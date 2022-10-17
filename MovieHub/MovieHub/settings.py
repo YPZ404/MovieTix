@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'my_admin.adminMiddleware.AdminMiddleware'
 ]
 
-ROOT_URLCONF = 'movieHub.urls'
+ROOT_URLCONF = 'MovieHub.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movieHub.wsgi.application'
+WSGI_APPLICATION = 'MovieHub.wsgi.application'
 
 
 # Database

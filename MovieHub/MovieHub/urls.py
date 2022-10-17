@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('movie_web.urls')),  # 默认访问影院用户登陆界面
     path('my_admin/', include('my_admin.urls')),  # 后台管理
+    path('movie_web/', include('movie_web.urls')),  # 用户界面
 ]
