@@ -12,7 +12,7 @@ from my_admin.models import Announcement
 
 # Create your views here.
 
-# The initial welcme page
+# The initial welcome page
 def index(request):
     return HttpResponse("Welcome to MoiveHub")
 

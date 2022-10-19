@@ -47,21 +47,14 @@ def index(request, pIndex=1):
 def insert(request):
     try:
         ob = Release()
+        roomId = request.POST['roomId']
+        Room.objects.get(room_id=roomId)
         while True:
             release_id = random.randint(10000000, 99999999)
             try:
-                release_id = Movie.objects.get(release_id=release_id)
+                release = Movie.objects.get(release_id=release_id)
             except Exception as err:
                 ob.release_id = release_id
-                break
-            else:
-                continue
-
-            try:
-                oa = Room()
-                room_id = Room.objects.get(room_id=room_id)
-            except Exception as err:
-                oa.room_id = room_id
                 break
             else:
                 continue

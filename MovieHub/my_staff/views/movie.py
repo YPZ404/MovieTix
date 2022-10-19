@@ -54,7 +54,7 @@ def insert(request):
         while True:
             movie_id = random.randint(10000000, 99999999)
             try:
-                movie_id = Movie.objects.get(movie_id=movie_id)
+                movie = Movie.objects.get(movie_id=movie_id)
             except Exception as err:
                 ob.movie_id = movie_id
                 break
