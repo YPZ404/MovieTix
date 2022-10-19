@@ -6,6 +6,7 @@ from my_staff.views import room
 from my_staff.views import movie
 from my_staff.views import release
 from my_staff.views import manage
+from my_staff.views import announcement
 
 urlpatterns = [
     # staff home page
@@ -51,4 +52,16 @@ urlpatterns = [
     path('manage/update/', manage.update, name="staff_manage_update"),
     path('manage/delete/<int:releaseId>', manage.delete, name="staff_manage_delete"),
 
+    # announcement information management
+    path('announcement/<int:pIndex>', announcement.index, name="staff_announcement_index"),
+    path('announcement/add', announcement.add, name="staff_announcement_add"),
+    path('announcement/insert', announcement.insert, name="staff_announcement_insert"),
+    path('announcement/delete/<int:announcementId>', announcement.delete, name="staff_announcement_delete"),
+
+    # room management
+    path('room/<int:pIndex>', room.index, name="staff_room_index"),
+    path('room/add', room.add, name="staff_room_add"),
+    path('room/insert', room.insert, name="staff_room_insert"),
+    path('room/edit/<int:roomId>', room.edit, name="staff_room_edit"),
+    path('room/update/', room.update, name="staff_room_update"),
 ]
