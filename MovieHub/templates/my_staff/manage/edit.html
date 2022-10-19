@@ -2,68 +2,68 @@
 
 {% block main_body %}<!-- Content Header (Page header) -->
 <section class="content-header">
-      <h1>
+    <h1>
         Change Release Time
-      </h1>
-    </section>
+    </h1>
+</section>
 
-    <!-- Main content -->
-    <section class="content container-fluid">
+<!-- Main content -->
+<section class="content container-fluid">
 
-      <div class="row">
+    <div class="row">
         <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-                <h2 class="box-title"> Choose Another Time</h2>
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title"> Choose Another Time</h2>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="{% url 'staff_manage_update' %}" method="post" onsubmit="return check()">
+                    {% csrf_token %}
+
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Release Id:</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="releaseId" class="form-control" id="releaseId" value="{{ release.release_id }}" readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Original Time:</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="originTime" class="form-control" id="originTime" value="{{ release.release_time }}" readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">New Release Time:</label>
+                            <div class="col-sm-4">
+                                <input type="datetime-local" id="releaseTime" name="releaseTime" >
+                                <small class="error-message" style="color: red"></small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" >update</button> &nbsp;&nbsp;&nbsp;
+                            <a type="button" href="{% url 'staff_manage_index' 1 %}" class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+
+                    <!-- /.box-footer -->
+                </form>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal" action="{% url 'admin_release_update' %}" method="post" onsubmit="return check()">
-                {% csrf_token %}
-
-                 <div class="box-body">
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Release Id:</label>
-                         <div class="col-sm-4">
-                         <input type="text" name="releaseId" class="form-control" id="releaseId" value="{{ release.release_id }}" readonly="true">
-                         </div>
-                    </div>
-
-                       <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Original Time:</label>
-                         <div class="col-sm-4">
-                         <input type="text" name="originTime" class="form-control" id="originTime" value="{{ release.release_time }}" readonly="true">
-                         </div>
-                    </div>
-
-                     <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">New Release Time:</label>
-                  <div class="col-sm-4">
-                        <input type="datetime-local" id="releaseTime" name="releaseTime" >
-                        <small class="error-message" style="color: red"></small>
-                  </div>
-
-                </div>
-
-                </div>
-
-
-
-
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary" >update</button> &nbsp;&nbsp;&nbsp;
-                    <a type="button" href="{% url 'admin_release_index' 1 %}" class="btn btn-primary">Back</a>
-                </div>
-              </div>
-
-              <!-- /.box-footer -->
-            </form>
-          </div>
-          <!-- /.box -->
-           <script>
+            <!-- /.box -->
+            <script>
 
                 const releaseTime = document.getElementById("releaseTime");
                 function check() {
@@ -89,13 +89,13 @@
                 }
 
                 function removeError(element){
-                   const element_par = element.parentElement;
-                   const errMsg = element_par.querySelector('.error-message');
-                   errMsg.textContent = ' '
+                    const element_par = element.parentElement;
+                    const errMsg = element_par.querySelector('.error-message');
+                    errMsg.textContent = ' '
                 }
             </script>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
 {% endblock %}

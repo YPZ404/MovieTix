@@ -67,7 +67,7 @@ def edit(request, releaseId=0):
     try:
         ob = Release.objects.get(release_id=releaseId)
         context = {'release': ob}
-        return render(request, 'my_staff/release/edit.html', context)
+        return render(request, 'my_staff/manage/edit.html', context)
     except Exception as err:
         print(err)
         context = {'info': 'Cannot find the information of edited release'}

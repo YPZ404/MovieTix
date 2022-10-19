@@ -76,7 +76,6 @@ def edit(request, releaseId=0):
         context = {'info': 'Cannot find the information of edited release'}
     return render(request, 'my_admin/info.html', context)
 
-
 # update release information action
 def update(request):
     try:

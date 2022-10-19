@@ -51,5 +51,4 @@ urlpatterns = [
     path('manage/update/', manage.update, name="staff_manage_update"),
     path('manage/delete/<int:releaseId>', manage.delete, name="staff_manage_delete"),
 
-
 ]
