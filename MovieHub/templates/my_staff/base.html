@@ -216,7 +216,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{% url 'staff_movie_index' 1 %}"> <i class="fa fa-circle-o"></i>Movie Information</a></li>
-                        <li><a href="{% url 'staff_release_index'%}"> <i class="fa fa-circle-o"></i>Release Movie</a></li>
+                        <li><a href="{% url 'staff_release_index' 1 %}"> <i class="fa fa-circle-o"></i>Release Movie</a></li>
+                        <li><a href="{% url 'staff_manage_index' 1 %}"> <i class="fa fa-circle-o"></i>Release Information</a></li>
                     </ul>
                 </li>
                 <li><a href="#"><i class="fa fa-info"></i> <span>Post Announcements</span></a></li>

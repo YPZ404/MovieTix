@@ -46,12 +46,6 @@ def index(request, pIndex=1):
 def add(request):
     return render(request, 'my_staff/movie/add.html')
 
-def gorelease(request):
-    return render(request, 'my_staff/movie/../../templates/my_staff/release/release.html')
-
-def release(requset):
-    context = {'info': 'Update Failed'}
-    return render(request, 'my_staff/info.html', context)
 
 # insert new staff action
 def insert(request):
@@ -60,7 +54,7 @@ def insert(request):
         while True:
             movie_id = random.randint(10000000, 99999999)
             try:
-                movie = Movie.objects.get(movie_id=movie_id)
+                movie_id = Movie.objects.get(movie_id=movie_id)
             except Exception as err:
                 ob.movie_id = movie_id
                 break
@@ -71,9 +65,8 @@ def insert(request):
         if not posterFile:
             context = {'info': "Add new movie fails,no poster upload"}
             return render(request, 'my_staff/info.html', context)
-        poster = datetime.now().strftime("%Y-%m-%d%H:%M:%S") + "." + posterFile.name.split('.').pop()
-
-        destination = open("./static/uploads/movie_pic/" + poster, "wb+")
+        poster = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "." + posterFile.name.split('.').pop()
+        destination = open(r'C:\Users\13646\Documents\ELEC9609-Group10\movieHub\static\uploads\movie_pic\'' + poster)
         for chunk in posterFile.chunks():
             destination.write(chunk)
         destination.close()
