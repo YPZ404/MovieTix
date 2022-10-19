@@ -3,7 +3,7 @@
 {% block main_body %}<!-- Content Header (Page header) -->
 <section class="content-header">
       <h1>
-        Change Release Time
+        Edit Release Information
       </h1>
     </section>
 
@@ -14,7 +14,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-                <h2 class="box-title"> Choose Another Time</h2>
+                <h2 class="box-title"> Change Time or Price</h2>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -27,6 +27,14 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Release Id:</label>
                          <div class="col-sm-4">
                          <input type="text" name="releaseId" class="form-control" id="releaseId" value="{{ release.release_id }}" readonly="true">
+                         </div>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Price:</label>
+                         <div class="col-sm-4">
+                         <input type="text" name="price" class="form-control" id="price" value="{{ release.price }}">
+                             <small class="error-message" style="color: red"></small>
                          </div>
                     </div>
 
@@ -43,6 +51,7 @@
                         <input type="datetime-local" id="releaseTime" name="releaseTime" >
                         <small class="error-message" style="color: red"></small>
                   </div>
+
 
                 </div>
 
@@ -66,14 +75,23 @@
            <script>
 
                 const releaseTime = document.getElementById("releaseTime");
+                const price = document.getElementById("price")
                 function check() {
                     const err = [];
                     const releaseTimeValue = releaseTime.value
+                    const priceValue = price.value
                     if( new Date(releaseTimeValue).getTime()-new Date().getTime() < 0 ){
                         setError(releaseTime,"must be over the current time")
                         err.push("error")
                     }else {
                         removeError(releaseTime)
+                    }
+
+                    if(priceValue <= 0){
+                        setError(price,"price must be positive")
+                        err.push("error")
+                    }else {
+                        removeError(price)
                     }
 
                     if (err.length > 0) {

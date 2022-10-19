@@ -17,8 +17,9 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('movie_web.urls')),  # 默认访问影院用户登陆界面
-    path('my_admin/', include('my_admin.urls')),  # 后台管理
-    path('movie_web/', include('movie_web.urls')),  # 用户界面
-    path('my_staff/', include('my_staff.urls')),   # staff management
+    path('', include('movie_web.urls')),
+    path('my_admin/', include('my_admin.urls')),  # admin
+    path('my_staff/', include('my_staff.urls')),  # staff
+    path('movie_web/', include('movie_web.urls')),  # movie_web
+
 ]

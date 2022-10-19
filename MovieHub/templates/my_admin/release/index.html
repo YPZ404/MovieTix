@@ -39,6 +39,7 @@
                   <th>Movie Name</th>
                   <th>Room Id</th>
                     <th>Release Time</th>
+                    <th>Price</th>
                   <th>Is Delete</th>
                   <th>Edit</th>
                 </tr>
@@ -49,10 +50,11 @@
                     <td>{{ vo.movie_name }}</td>
                     <td>{{ vo.room_id }}</td>
                     <td>{{ vo.release_time }}</td>
+                     <td>{{ vo.price }}</td>
                     <td>{{ vo.is_delete }}</td>
                   <td>
                     <a type="button" href="{% url 'admin_release_edit' vo.release_id %}" class="btn btn-success btn-xs">
-                      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> change time</a>
+                      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> edit</a>
                        <button type="button" onclick="doDel('{% url 'admin_release_delete' vo.release_id %}')" class="btn btn-danger btn-xs">
                       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>delete</button>
                   </td>

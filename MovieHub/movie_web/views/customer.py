@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from movie_web.models import Customer
+from my_admin.models import Customer
 from django.core.paginator import Paginator
 from datetime import date, datetime
 import hashlib

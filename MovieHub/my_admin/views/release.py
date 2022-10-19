@@ -33,7 +33,7 @@ def index(request, pIndex=1):
         else:
             is_delete = 'yes'
         releaseMovie = {'release_id': vo.release_id, 'movie_id': vo.movie_id, 'movie_name': movieName,
-                        'room_id': vo.room_id, 'release_time': vo.release_time, 'is_delete': is_delete}
+                        'room_id': vo.room_id, 'release_time': vo.release_time,'price':vo.price, 'is_delete': is_delete}
         releaseMovies.append(releaseMovie)
 
     # In page by 10 record
@@ -76,12 +76,16 @@ def edit(request, releaseId=0):
         context = {'info': 'Cannot find the information of edited release'}
     return render(request, 'my_admin/info.html', context)
 
+
 # update release information action
 def update(request):
     try:
         releaseId = request.POST["releaseId"]
         ob = Release.objects.get(release_id=releaseId)
-        ob.release_time = request.POST['releaseTime']
+        newTime = request.POST['releaseTime']
+        if newTime:
+            ob.release_time = newTime
+        ob.price = request.POST['price']
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.save()
         context = {'info': "Update Successfully"}

@@ -6,6 +6,7 @@ from my_admin.views import room
 from my_admin.views import movie
 from my_admin.views import announcement
 from my_admin.views import release
+from my_admin.views import customer
 
 urlpatterns = [
     # admin home page
@@ -52,5 +53,7 @@ urlpatterns = [
     path('release/update/', release.update, name="admin_release_update"),
     path('release/delete/<int:releaseId>', release.delete, name="admin_release_delete"),
 
+    # customer info management
+    path('customer/<int:pIndex>', customer.index, name="admin_customer_index"),
 
 ]

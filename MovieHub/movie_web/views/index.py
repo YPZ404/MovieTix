@@ -5,7 +5,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
 import re
-from movie_web.models import Customer
+from my_admin.models import Customer
 
 from datetime import datetime, timedelta
 from my_admin.models import Announcement
@@ -14,7 +14,7 @@ from my_admin.models import Announcement
 
 # The initial welcome page
 def index(request):
-    return HttpResponse("Welcome to MoiveHub")
+    return render(request, "movie_web/welcomePage.html")
 
 # Load user register form
 def register(request):

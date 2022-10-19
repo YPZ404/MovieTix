@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_admin',
     'movie_web',
-    'my_staff',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +55,7 @@ MIDDLEWARE = [
     'my_admin.adminMiddleware.AdminMiddleware'
 ]
 
-ROOT_URLCONF = 'MovieHub.urls'
+ROOT_URLCONF = 'movieHub.urls'
 
 TEMPLATES = [
     {
@@ -74,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'MovieHub.wsgi.application'
+WSGI_APPLICATION = 'movieHub.wsgi.application'
 
 
 # Database
@@ -85,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'movieHub',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': '3306',
     }
