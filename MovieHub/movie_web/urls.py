@@ -18,5 +18,7 @@ urlpatterns = [
     # Profile management
     path('customer', customer.edit, name="customer_edit"),
     path('customer/update', customer.update, name="customer_update"),
+    path('movie/<int:pIndex>', movie.index, name="admin_movie_index"),
+    path('releaseList/<int:pIndex>', movie.releaseList, name="movie_releaseList")
 
 ]
