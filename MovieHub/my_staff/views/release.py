@@ -83,7 +83,7 @@ def insert(request):
         ob.save()
     except Exception as err:
         print(err)
-        context = {'info': "Release new movie fails"}
+        context = {'info': "Room ID dose not exist, releasing new movie fails"}
     return render(request, 'my_staff/info.html', context)
 
 

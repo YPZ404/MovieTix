@@ -73,14 +73,23 @@
             <script>
 
                 const releaseTime = document.getElementById("releaseTime");
+                const price = document.getElementById(("price"))
                 function check() {
                     const err = [];
                     const releaseTimeValue = releaseTime.value
+                    const priceValue = price.value
                     if( new Date(releaseTimeValue).getTime()-new Date().getTime() < 0 ){
                         setError(releaseTime,"must be over the current time")
                         err.push("error")
                     }else {
                         removeError(releaseTime)
+                    }
+
+                    if(priceValue <= 0){
+                        setError(price,"price must be positive")
+                        err.push("error")
+                    }else {
+                        removeError(price)
                     }
 
                     if (err.length > 0) {
