@@ -12,7 +12,7 @@ from django.core.paginator import Paginator
 from datetime import datetime
 import hashlib
 import string
-
+from my_staff.models import Seat
 
 # browse staff information
 def index(request, pIndex=1):
@@ -49,6 +49,8 @@ def insert(request):
         ob = Release()
         roomId = request.POST['roomId']
         Room.objects.get(room_id=roomId)
+        rowSize =  Room.objects.get(room_id=roomId).row_size
+        columnSize = Room.objects.get(room_id=roomId).column_size
         while True:
             release_id = random.randint(10000000, 99999999)
             try:
@@ -59,14 +61,25 @@ def insert(request):
             else:
                 continue
 
+        for a in range(1, rowSize+1):
+            for b in range(1, columnSize+1):
+                oa = Seat()
+                oa.release_id = release_id
+                oa.room_id = request.POST['roomId']
+                oa.row_id = a
+                oa.column_id = b
+                oa.is_available = 0
+                oa.save()
+
         ob.movie_id = request.POST['movieId']
         ob.room_id = request.POST['roomId']
+        ob.price = request.POST['price']
         ob.is_delete = 0
         ob.release_time = request.POST['releaseTime']
         ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        context = {'info': "Release new movie successfully, movie_id is %s" % ob.release_id}
+        context = {'info': "Release new movie successfully, release_id is %s" % ob.release_id}
         ob.save()
     except Exception as err:
         print(err)
