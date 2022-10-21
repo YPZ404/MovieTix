@@ -1,7 +1,7 @@
 from django.urls import path
 from movie_web.views import customer
 from movie_web.views import index
-
+from movie_web.views import movie
 urlpatterns = [
     # movie web home page
     path('', index.index, name="welcome"),
