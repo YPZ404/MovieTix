@@ -41,7 +41,7 @@ def update(request):
         phone = request.POST['phone']
         ob.phone = int(phone)
         ob.email = request.POST['email']
-        # ob.bank_card = request.POST['bank_card']
+        ob.bank_card = request.POST['bank_card']
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.save()
         context = {'info': "Update Successfully"}

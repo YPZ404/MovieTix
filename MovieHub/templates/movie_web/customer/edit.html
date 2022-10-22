@@ -82,7 +82,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                   <button type="submit" class="btn btn-primary" name="update" style="margin-right: 20px;">update</button>
                   <a type="button" href="{% url 'customer_home' %}" class="btn btn-primary" name="cancel" style="margin-right: 150px;">Cancel</a>
-                  <a type="button" href="{% url 'customer_home' %}" class="btn btn-primary" name="bind">Bind Bank Card</a>
+                  <a type="button" onclick="bindCard()" class="btn btn-primary" name="bind">Bind Bank Card</a>
                 </div>
               </div>
 
@@ -95,6 +95,7 @@
                 const name = document.getElementById("name")
                 const phone = document.getElementById("phone")
                 const email = document.getElementById("email")
+                const bankcard = document.getElementById("bank_card")
                 function checkFrom(){
                     const passwordValue = password.value.trim()
                     const nameValue = name.value.trim();
@@ -167,6 +168,16 @@
                    const element_par = element.parentElement;
                    const errMsg = element_par.querySelector('.error-message');
                    errMsg.textContent = ' '
+                }
+
+                function bindCard(){
+                  var card = prompt("Please enter your bank card","");
+                  if(!isNumber(card)){
+                    alert("Invalid bank card!")
+                  }else{
+                    alert("Bind to bank card" + card);
+                    document.getElementById("bank_card").value = card;
+                  }
                 }
             </script>
         </div>
