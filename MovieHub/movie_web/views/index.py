@@ -61,7 +61,7 @@ def doRegister(request):
         ob.name = name
         ob.email = email
         ob.save()
-        return render(request, 'movie_web/index/loadLogin.html')
+        return redirect(reverse('customer_load_login'))
     except Exception as err:
         print(err)
         context = {'info': "Register fails"}
