@@ -106,16 +106,16 @@
         <div class="pull-left info">
           <p>{{ request.session.customer.name }}</p>
           <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> online</a>
+          <a href="{% url 'customer_home' %}"><i class="fa fa-circle text-success"></i> online</a>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Navigation</li>
-        <li class="active"><a href="{% url 'customer_home' %}"><i class="fa fa-home"></i> <span>Home Page</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Home Page</span></a></li>
 
-        <li><a href="#"><i class="fa fa-magic"></i> <span>Movies</span></a></li>
+        <li><a href="{% url 'admin_movie_index' 1 %}"><i class="fa fa-magic"></i> <span>Movies</span></a></li>
 
         <li class="treeview">
           <a href="orders.html"><i class="fa fa-shopping-cart"></i> <span>Orders</span>
