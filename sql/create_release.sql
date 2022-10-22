@@ -3,6 +3,7 @@ CREATE TABLE `Release` (
   `release_id` int NOT NULL,
   `movie_id` int NOT NULL,
   `room_id` int NOT NULL,
+  `price` float NOT NULL,
   `is_delete` int NOT NULL default 0,
   `release_time` timestamp NOT NULL,
   `create_time` timestamp NOT NULL,
