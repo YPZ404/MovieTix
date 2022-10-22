@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from datetime import datetime
-from movie_web.models import Movie
-from movie_web.models import Release
+from my_admin.models import Movie
+from my_admin.models import Release
 from django.db.models import Q
 from django.core import serializers
 import json
