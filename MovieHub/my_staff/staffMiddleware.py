@@ -17,13 +17,13 @@ class StaffMiddleware(object):
         print("url:" + path)
 
         # url judgement
-    #    urllist = ['/my_staff/loadLogin', '/my_staff/login', '/my_staff/logout', '/my_staff/verify']
+        urllist = ['/my_staff/loadLogin', '/my_staff/login', '/my_staff/logout', '/my_staff/verify']
         # whether the url is going to staff
-    #    if re.match(r"^/my_staff", path) and (path not in urllist):
-      #      # judge whether the staff is logged in
-       #     if "adminuser" not in request.session:
+        if re.match(r"^/my_staff", path) and (path not in urllist):
+            # judge whether the staff is logged in
+            if "adminuser" not in request.session:
                 # go to the login interface
-          #      return redirect(reverse('staff_load_login'))
+                return redirect(reverse('staff_load_login'))
 
         response = self.get_response(request)
         # Code to be executed for each request/response after
