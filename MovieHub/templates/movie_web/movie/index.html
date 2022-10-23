@@ -18,7 +18,7 @@
               <h3 class="box-title">Movie List</h3>
 
               <div class="box-tools">
-               <form action="{% url 'admin_movie_index' 1 %}" method="get">
+               <form action="{% url 'customer_movie_index' 1 %}" method="get">
                 <div class="input-group input-group-sm" style="width:150px;">
                   <input type="text" name="keyword" class="form-control pull-right" placeholder="movie name">
                   <div class="input-group-btn">
@@ -52,12 +52,12 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="{% url 'admin_movie_index' pIndex|add:-1 %}?{{condition|join:'&'}}">&laquo;</a></li>
+                <li><a href="{% url 'customer_movie_index' pIndex|add:-1 %}?{{condition|join:'&'}}">&laquo;</a></li>
                   {% for p in pageNum %}
-                       <li {% if p == pIndex %}class="active"{% endif %}><a href="{% url 'admin_movie_index' p %}?{{condition|join:'&'}}">{{ p }}</a></li>
+                       <li {% if p == pIndex %}class="active"{% endif %}><a href="{% url 'customer_movie_index' p %}?{{condition|join:'&'}}">{{ p }}</a></li>
                   {% endfor %}
 
-                <li><a href="{% url 'admin_movie_index' pIndex|add:1 %}?{{condition|join:'&'}}">&raquo;</a></li>
+                <li><a href="{% url 'customer_movie_index' pIndex|add:1 %}?{{condition|join:'&'}}">&raquo;</a></li>
               </ul>
             </div>
           </div>
