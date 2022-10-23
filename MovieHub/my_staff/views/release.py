@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from my_admin.models import Movie
 from my_admin.models import Release
 from my_admin.models import Room
@@ -114,6 +114,16 @@ def update(request):
         print(err)
         context = {'info': 'Update Failed'}
     return render(request, 'my_staff/info.html', context)
+
+def checkOrderNum(request, movieId=0):
+    num = Release.objects.filter(movie_id=movieId, release_time__gt=datetime.now()).__len__()
+    '''
+    list = []
+    for ob in releaseList:
+        list.append({'release_time': ob.release_time, 'room_id': ob.room_id})
+    '''
+    return JsonResponse({'number': num})
+
 
 def is_number(s):
     try:

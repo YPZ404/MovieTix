@@ -203,13 +203,13 @@
     function doc(movieId){
         $.ajax({
             type:'get',
-            url:"/my_staff/movie/checkReleaseNum/"+movieId,
+            url:"/my_staff/release/checkOrderNum/"+movieId,
             dataType:'json',
             async: false,
             success:function(res){
                 Modal.alert({
-                    msg: "This movie has "+res['number']+" sessions at present",
-                    title: 'Current Release Number',
+                    msg: "This movie has "+res['number']+" orders in total",
+                    title: 'Total Order Number',
                     btnok: 'ok',
                 })
             },

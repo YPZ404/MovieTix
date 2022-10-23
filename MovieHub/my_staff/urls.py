@@ -45,6 +45,7 @@ urlpatterns = [
     path('release/insert', release.insert, name="staff_release_insert"),
     path('release/edit/<int:movieId>', release.edit, name="staff_release_edit"),
     path('release/update/', release.update, name="staff_release_update"),
+    path('release/checkOrderNum/<int:movieId>', release.checkOrderNum, name="staff_release_check_order"),
 
     #manage released movie
     path('manage/<int:pIndex>', manage.index, name="staff_manage_index"),
