@@ -1,3 +1,4 @@
+from platform import release
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -70,3 +71,19 @@ def releaseList(request, pIndex=1):
     json_data = serializers.serialize('json', releaseList2) # 将查询结果进行json序列化
     context['releaseList'] = json_data
     return HttpResponse(json.dumps(context), content_type="application/json")
+
+# load movie booking page
+def loadBooking(request, release_id):
+    rIndex = int(release_id)
+    try:
+        # Selected movie to book
+        release_ob = Release.objects.get(release_id = rIndex)
+        movie_id = release_ob.movie_id
+        movie_ob = Movie.objects.get(movie_id = movie_id)
+
+        context = {'movie':movie_ob, 'release':release_ob}
+        return render(request, 'movie_web/movie/ticketBooking.html', context)
+    except Exception as err:
+        print(err)
+        context = {'info': 'Cannot book the movie'}
+    return render(request, 'movie_web/movie/ticketBooking.html', context)

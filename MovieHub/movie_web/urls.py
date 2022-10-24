@@ -18,7 +18,10 @@ urlpatterns = [
     # Profile management
     path('customer', customer.edit, name="customer_edit"),
     path('customer/update', customer.update, name="customer_update"),
+
+    # Movie page
     path('movie/<int:pIndex>', movie.index, name="customer_movie_index"),
-    path('releaseList/<int:pIndex>', movie.releaseList, name="customer_release_list")
+    path('releaseList/<int:pIndex>', movie.releaseList, name="customer_release_list"),
+    path('loadBooking/<int:release_id>', movie.loadBooking, name="customer_load_booking"),
 
 ]
