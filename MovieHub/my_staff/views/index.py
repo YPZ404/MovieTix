@@ -11,7 +11,11 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return render(request, 'my_staff/index/index.html')
+    staffs = Staff.objects
+    numOfStaff = staffs.all().__len__()
+    context = {'numOfStaff': numOfStaff}
+
+    return render(request, 'my_staff/index/index.html',context)
 
 
 def loadLogin(request):
