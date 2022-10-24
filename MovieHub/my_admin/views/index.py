@@ -3,10 +3,10 @@ from django.urls import reverse
 import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
-from my_admin.models import Staff
 
 from my_admin.models import Staff
 from my_admin.models import Announcement
+from my_admin.models import Customer
 from datetime import datetime, timedelta
 # Create your views here.
 from django.http import HttpResponse
@@ -16,13 +16,14 @@ from django.http import HttpResponse
 def index(request):
     staffs = Staff.objects
     numOfStaff = staffs.all().__len__()
-
+    customers = Customer.objects
+    numOfCustomers = customers.all().__len__()
     now = datetime.now()
     zeroToday = now - timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,
                                 microseconds=now.microsecond)
     announcements = Announcement.objects
     todayAnnouncement = announcements.all().filter(create_time__gte=zeroToday).__len__()
-    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement}
+    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement,'numOfCustomer':numOfCustomers}
 
     return render(request, 'my_admin/index/homepage.html', context)
 
