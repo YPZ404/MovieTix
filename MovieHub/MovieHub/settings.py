@@ -85,7 +85,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'movieHub',
         'USER': 'root',
+<<<<<<< HEAD
         'PASSWORD': '12345678',
+=======
+        'PASSWORD': '111111',
+>>>>>>> 9fc7d1a619944a6873f08e8c6c50a829ca2458da
         'HOST': 'localhost',
         'PORT': '3306',
     }
