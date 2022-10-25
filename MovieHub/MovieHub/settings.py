@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'my_admin.adminMiddleware.AdminMiddleware'
+    'my_admin.adminMiddleware.AdminMiddleware',
+    'movie_web.customerMiddleware.CustomerMiddleware'
 ]
 
 ROOT_URLCONF = 'MovieHub.urls'
@@ -85,11 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'movieHub',
         'USER': 'root',
-<<<<<<< HEAD
+
         'PASSWORD': '12345678',
-=======
-        'PASSWORD': '111111',
->>>>>>> 9fc7d1a619944a6873f08e8c6c50a829ca2458da
         'HOST': 'localhost',
         'PORT': '3306',
     }

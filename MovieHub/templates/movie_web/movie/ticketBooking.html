@@ -1,61 +1,108 @@
 {% extends "movie_web/base.html" %}
 {% load static %}
 
+{% block head_block %}
+<link rel="stylesheet" href="{% static 'seatStyle.css'%}">
+<script src="{% static 'my_admin/bower_components/jquery/dist/jquery.min.js'%}"></script>
+{% endblock %}
+
 {% block main_body %}   
 
-    <!-- Content Header (Page header) -->
+     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h4>
-          Execute Information
+          Ticket Booking
       </h4>
     </section>
 
+      
+            <!--BOOKING SECTION START-->
 
-    <div class="container">
-        <div class="container">
-            <form method="POST">
-                {% csrf_token %}
-                <label for="form-control" style="font-weight: bold;">Seat Numbers:</label>
+            <div style="width:850px;margin: auto auto;">
+                <span id='screen'>
+                 <p>
+                    Screen
+                </p>
+                </span>
+                <div id="seats">
+                    {% for row in rows %}
+                    <div class="seatsRaw">
+                        {% for column in columns %}
+                        <div class="seat"></div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
     
-                <!-- <textarea disabled class="form-control" id="demo" name="booked_seats" rows="3"></textarea> -->
-                <!-- <input type="textarea" disabled class="form-control" id="demo" name="booked_seats" rows="3"> -->
-                <input type="text" readonly="readonly"  class="form-control" id="demo" name="booked_seats" value="">
+                  <div id="booking_desc">
+                    <div class="booking_left">
+                        <p style="color: #FBBC53;font-weight: bold; font-size: larger;">Selected Seats </p>
+                        <div id="selected_seat"></div>
+                        <br>
+                        <button id="bookButton" type="button" style="color: #d953fb;">Book</button>
+                        <div id="errMsg"></div>
+                    </div>
     
-                <label for="form-control" style="font-weight: bold;">Number of Seats:</label>
-                <input type="text" readonly="readonly" class="form-control" id="count" name="count" value="">
-            <br>
-            <div class="jumbotron">
-                <!-- {% for seat,val in seats.items %} -->
-                
-                <!-- {{val}} -->
-                <!-- {% if val >= 1 %} -->
-
-                <!-- <input type="image" onclick="bookSeat(this.id)" disabled = true id={{seat}}" value={{seat}}" src="/static/bk.png" style="height: 80px; width: 80px;"/> -->
-    
-                
-                <!-- {% else %} -->
-    
-                <!-- <input type="image" onclick="bookSeat(this.id)"  id="{{seat}}" value="{{seat}}" src="{% static 'seat.png' %}" style="height: 80px; width: 80px;"/> -->
-    
-                <!-- <button onclick="bookSeat(this.id)" class="btn btn-success" id="{{seat}}" value="{{seat}}" ">testbutton</button> -->
-                <!-- {% endif %} -->
-                
-                <!-- {% endfor %} -->
+                    <div class="booking_right">Ticket Price: {{ price }}
+                        <br><br>
+                        <div id="total">Total Cost：<span> 0 </span></div>
+                    </div>
+                 </div>
             </div>
-            <div class="container">
+        
+            <script>
+                $(document).ready(function(){
+                
+                                var seat_num ;
+                                var total_cost      = 0 ;
+                                var pricePerTicked  = {{ price }};
+                                var maximumSeats    = 4;
+                
+                                $('#bookButton').hide(); // Hide the book button
+                
+                                $('.seat').each(function() {       
+                                    var column_num = parseInt( $(this).index() ) + 1;
+                                    var row_num = parseInt( $(this).parent().index() )+1;    
+                                    seat_num = row_num+"-"+column_num ;  
+                                    $(this).text(seat_num); // seat number
+                                    $(this).addClass("seat"+seat_num); //add css
+                                });
+                
+                                $("#seats .seat").click(function() {  
+                                        $('#errMsg').html('');
+                                        if($(this).hasClass('select')){ // check slected
+                                            $(this).removeClass('select'); //remove css
+                                            $(this).css('background-color','#D8D8D8'); // reload adding css
+                
+                                            var currentSeatClass = $(this).attr('class').split(' ')[1]; 
+                
+                                            console.log(currentSeatClass);
+                                             $( "#selected_seat ."+currentSeatClass ).remove();
+                
+                                        }else if($(".your_selected_seat").length<maximumSeats && !$(this).hasClass('select')){ // check number of seats
+                                            $(this).css('background-color','#71DCAA'); // add color
+                                            $(this).addClass("select"); // add css
+                
+                
+                                            var column_num = parseInt( $(this).index() ) + 1;
+                                            var row_num = parseInt( $(this).parent().index() )+1;    
+                                            $( "#selected_seat" ).append("<span class='your_selected_seat seat"+row_num+"-"+column_num+" '> Seat Number: <b style='color:#EAABFF'>" + row_num+"-"+column_num +"</b> </br></span>");
+                                        }else {
+                                            $('#errMsg').html('Your selection is over the limit.');    
+                                        }
+                
+                                        if($(".your_selected_seat").length){
+                                            $('#bookButton').fadeIn(1000);
+                                        }else {
+                                            $('#bookButton').fadeOut(1000);
+                                        }
+                                        //Get total cost
+                                        total_cost = $(".your_selected_seat").length * pricePerTicked;
+                                        $('#total > span').html(total_cost);
+                                });
+            
+                });
+            </script>
     
-    
-                <button class="btn btn-danger" onclick="location.reload()" style="width: 70%; position: absolute; margin-left: 120px;">Clear Booked seats</button>
-                <br>
-                <br>
-                <!-- <button class="btn btn-success" style="width: 70%; position: absolute;margin-left: 120px;">Confirm Booking</button> -->
-                <input type="submit" class="btn btn-success" style="width: 70%; position: absolute;margin-left: 120px;" value="Confirm Booking">
-            </form>
-                <br>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
 
 {% endblock %}

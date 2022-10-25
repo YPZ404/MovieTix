@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from datetime import datetime
-from my_admin.models import Movie
+from my_admin.models import Movie, Room
 from my_admin.models import Release
 from django.db.models import Q
 from django.core import serializers
@@ -80,8 +80,16 @@ def loadBooking(request, release_id):
         release_ob = Release.objects.get(release_id = rIndex)
         movie_id = release_ob.movie_id
         movie_ob = Movie.objects.get(movie_id = movie_id)
+        movie_name = movie_ob.movie_name
+        room_id = release_ob.room_id
+        room_ob = Room.objects.get(room_id = room_id)
+        row_size = room_ob.row_size
+        column_size = room_ob.column_size
+        price = release_ob.price
+        release_time = release_ob.release_time
 
-        context = {'movie':movie_ob, 'release':release_ob}
+        context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
+         'rows':range(0,row_size), 'columns':range(0,column_size), 'price':price, 'release_time':release_time}
         return render(request, 'movie_web/movie/ticketBooking.html', context)
     except Exception as err:
         print(err)

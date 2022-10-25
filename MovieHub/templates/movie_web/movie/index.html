@@ -139,8 +139,8 @@
       //console.log(list[i]);
       var fields = list[i].fields;
       // console.log(fields);
-      // innerHtml = innerHtml + "<tr><td>" + movie_name + "</td><td>"+fields.room_id+ "</td><td>"+fields.release_time+"</td><td><a type='button'  href= 'movie_web/loadBooking/" + fields.release_id + "' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> book</ a></td></tr>";
-      innerHtml = innerHtml + "<tr><td>" + movie_name + "</td><td>"+fields.room_id+ "</td><td>"+fields.release_time+"</td><td><a type='button'  href= '{% url 'customer_edit' %}' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> book</ a></td></tr>";
+      //innerHtml = innerHtml + "<tr><td>" + movie_name + "</td><td>"+fields.room_id+ "</td><td>"+fields.release_time+"</td><td><a type='button'  href= '{% url 'customer_edit' %}' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> book</a></td></tr>";
+      innerHtml = innerHtml + "<tr><td>" + movie_name + "</td><td>"+fields.room_id+ "</td><td>"+fields.release_time+"</td><td><a type='button' href= '/movie_web/loadBooking/" + fields.release_id + "' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> book</a></td></tr>";
     }
     innerHtml =  "<tbody>" + innerHtml + "</tbody>"
     $("#ReleaseTable").html(innerHtml);
