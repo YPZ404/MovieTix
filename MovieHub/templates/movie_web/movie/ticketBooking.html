@@ -155,6 +155,8 @@
             
                 });
 
+                //Js http post
+
                 // function httpPost(URL, PARAMS) {
                 //     var temp = document.createElement("form");
                 //     temp.action = URL;
@@ -172,7 +174,6 @@
                 //     temp.submit();
                 //     return temp;
                 // }
-
 
 
                 // function seatPost(){
@@ -204,40 +205,43 @@
                            seats_content = seats_content + " "
                         }
                         count++;
-
                     }
                     
+                    let booking_confirm = 'Confirm to use the bank card ' + {{ bank_account }} +' to pay?'
                     Modal.confirm({
-                            msg: 'abd',
-                            title: 'book result',
-                            btnok: 'yes',
-                            btncl: 'no'
+                            msg: booking_confirm,
+                            title: 'payment confirmation',
+                            btnok: 'confirm',
+                            btncl: 'cancel'
                         }).on(function (e){
                             if (e) {
                                 $.ajax({
-                    type:'post',
-                    url:"/movie_web/movie/book",
-                    dataType:'json',
-                    data:{
-                        csrfmiddlewaretoken: csrftoken,
-                        release_id:release,
-                        seat_content:seats_content,
-                    },
+                                    type:'post',
+                                    url:"/movie_web/movie/book",
+                                    dataType:'json',
+                                    data:{
+                                        csrfmiddlewaretoken: csrftoken,
+                                        release_id:release,
+                                        seat_content:seats_content,
+                                    },
                     
-                    async: false,
-                    success:function(res){
-                        Modal.alert({
-                            msg: res['info'],
-                            title: 'book result',
-                            btnok: 'ok',
-                        }).on(function (e){
-                            window.location.href = '/movie_web'
-                        })
-                    },
-                });
+                                    async: false,
+                                    success:function(res){
+                                        Modal.alert({
+                                            msg: res['info'],
+                                            title: 'book result',
+                                            btnok: 'ok',
+                                        }).on(function (e){
+                                            window.location.href = '/movie_web'
+                                        })
+                                    },
+                                });
                             }
                         })
                 
+                
+                //Js ajax post
+
                 // $.ajax({
                 //     type:'post',
                 //     url:"/movie_web/movie/book",

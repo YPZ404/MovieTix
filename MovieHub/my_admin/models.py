@@ -132,7 +132,6 @@ class Order(models.Model):
     movie_name = models.CharField(max_length=40)
     price = models.FloatField()
     is_cancel = models.IntegerField()
-    is_pay = models.IntegerField()
     release_time = models.DateTimeField(default=datetime.now)
     create_time = models.DateTimeField(default=datetime.now)
     update_time = models.DateTimeField(default=datetime.now)
@@ -141,7 +140,7 @@ class Order(models.Model):
         return {'order_id': self.order_id, 'customer_username': self.customer_username, 'room_id': self.room_id,
                 'seat_content': self.seat_content, 'seat_num': self.seat_num, 'release_id': self.release_id,
                 'movie_name': self.movie_name,
-                'price': self.price, 'is_cancel': self.is_cancel, 'is_pay':self.is_pay,
+                'price': self.price, 'is_cancel': self.is_cancel,
                 'release_time': self.release_time.strftime('%Y-%m-%d %H:%M:%S'),
                 'create_time': self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
                 'update_time': self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

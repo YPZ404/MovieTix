@@ -5,7 +5,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 from datetime import datetime
-from my_admin.models import Movie, Room, Release, Order
+
+from pymysql import NULL
+from my_admin.models import Customer, Movie, Room, Release, Order
 from my_staff.models import Seat
 from django.db.models import Q
 from django.core import serializers
@@ -81,10 +83,20 @@ def releaseList(request, pIndex=1):
 
 # load movie booking page
 def loadBooking(request, release_id):
-    rIndex = int(release_id)
+    release_id = int(release_id)
     try:
+        username = request.session['logineduser']['username']
+        customer_ob = Customer.objects.get(username = username)
+        bank_account = customer_ob.bank_card
+
+        # If do not bind a bank card to account
+        if bank_account is None:
+            context = {'customer': customer_ob}
+            return render(request, 'movie_web/customer/edit.html', context)
+
+
         # Selected movie to book
-        release_ob = Release.objects.get(release_id=rIndex)
+        release_ob = Release.objects.get(release_id=release_id)
         movie_id = release_ob.movie_id
         movie_ob = Movie.objects.get(movie_id=movie_id)
         movie_name = movie_ob.movie_name
@@ -94,6 +106,7 @@ def loadBooking(request, release_id):
         column_size = room_ob.column_size
         price = release_ob.price
         release_time = release_ob.release_time
+        
 
         seat_obs = Seat.objects.filter(release_id=release_id)
         rows = range(1, row_size + 1)
@@ -108,11 +121,9 @@ def loadBooking(request, release_id):
                 row_seats.append(seat)
             seat_list.append(row_seats)
 
-        context = {'movie_name': movie_name, 'movie_id': movie_id, 'release_id': release_id, 'room_id': room_id,
+        context = {'movie_name': movie_name, 'bank_account': bank_account, 'release_id': release_id,
                    'seat_list': seat_list, 'price': price, 'release_time': release_time}
 
-        # context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
-        #  'rows':range(0,row_size), 'columns':range(0,column_size), 'price':price, 'release_time':release_time}
         return render(request, 'movie_web/movie/ticketBooking.html', context)
     except Exception as err:
         print(err)
@@ -142,14 +153,14 @@ def bookMovie(request):
         ob.movie_name = movieName
         ob.price = totalPrice
         ob.is_cancel = 0
-        ob.is_pay = 0
+        # ob.is_pay = 0
         ob.release_time = releaseObject.release_time
         ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.save()
     except Exception as err:
         print(err)
-        return JsonResponse({'info': 'book fails'})
+        return JsonResponse({'info': 'booking failed'})
 
     for seat in seatList:
         row = seat[4]
@@ -158,4 +169,4 @@ def bookMovie(request):
         seatObject.is_available = 1
         seatObject.save()
 
-    return JsonResponse({'info': 'successfully booked, click button to order page to pay this order '})
+    return JsonResponse({'info': 'successfully booked, view details in the order page '})
