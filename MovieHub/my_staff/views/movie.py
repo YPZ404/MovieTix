@@ -66,10 +66,6 @@ def insert(request):
             context = {'info': "Add new movie fails,no poster upload"}
             return render(request, 'my_staff/info.html', context)
         poster = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "." + posterFile.name.split('.').pop()
-        destination = open("./static/uploads/movie_pic/" + poster, "wb+")
-        for chunk in posterFile.chunks():
-            destination.write(chunk)
-        destination.close()
 
         ob.movie_name = request.POST['name']
         ob.poster = poster
@@ -81,6 +77,10 @@ def insert(request):
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         context = {'info': "Add new movie successfully, movie_id is %s" % ob.movie_id}
         ob.save()
+        destination = open("./static/uploads/movie_pic/" + poster, "wb+")
+        for chunk in posterFile.chunks():
+            destination.write(chunk)
+        destination.close()
     except Exception as err:
         print(err)
         context = {'info': "Add new movie fails"}
