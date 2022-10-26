@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 import hashlib
 import string
 from my_staff.models import Seat
-
+from my_admin.models import Order
 
 # browse staff information
 def index(request, pIndex=1):
@@ -140,7 +140,7 @@ def update(request):
 
 
 def checkOrderNum(request, movieId=0):
-    num = Release.objects.filter(movie_id=movieId, release_time__gt=datetime.now()).__len__()
+    num = Order.objects.filter(movie_id=movieId, is_cancel=0).__len__()
     '''
     list = []
     for ob in releaseList:

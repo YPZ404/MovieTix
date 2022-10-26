@@ -7,6 +7,8 @@ from my_staff.views import movie
 from my_staff.views import release
 from my_staff.views import manage
 from my_staff.views import announcement
+from my_staff.views import order
+from my_staff.views import customer
 
 urlpatterns = [
     # staff home page
@@ -65,4 +67,10 @@ urlpatterns = [
     path('room/insert', room.insert, name="staff_room_insert"),
     path('room/edit/<int:roomId>', room.edit, name="staff_room_edit"),
     path('room/update/', room.update, name="staff_room_update"),
+
+    # customer info management
+    path('customer/<int:pIndex>', customer.index, name="staff_customer_index"),
+
+    # order info management
+    path('order/<int:pIndex>', order.index, name="staff_order_index"),
 ]

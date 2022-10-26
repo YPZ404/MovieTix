@@ -3,6 +3,12 @@ from django.urls import reverse
 import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
+from my_admin.models import Announcement
+from my_admin.models import Customer
+from my_admin.models import Order
+from datetime import datetime, timedelta
+# Create your views here.
+from django.http import HttpResponse
 
 from my_admin.models import Staff
 # Create your views here.
@@ -11,12 +17,26 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
+    now = datetime.now()
+    zeroToday = now - timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,
+                                microseconds=now.microsecond)
+    beforeWeek = now - timedelta(days=7)
     staffs = Staff.objects
     numOfStaff = staffs.all().__len__()
-    context = {'numOfStaff': numOfStaff}
+    customers = Customer.objects
+    numOfCustomers = customers.all().filter(create_time__gte=beforeWeek).__len__()
+    announcements = Announcement.objects
+    todayAnnouncement = announcements.all().filter(create_time__gte=zeroToday).__len__()
+    orders = Order.objects.all().filter(create_time__gte=beforeWeek)
+    numOfOrder = orders.__len__()
+    revenue = 0
+    for order in orders:
+        revenue = revenue + order.price
 
-    return render(request, 'my_staff/index/index.html',context)
+    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement, 'numOfCustomer': numOfCustomers,
+               'numOfOrder': numOfOrder, 'revenue': revenue}
 
+    return render(request, 'my_staff/index/index.html', context)
 
 def loadLogin(request):
     return render(request, 'my_staff/index/loadLogin.html')
