@@ -7,6 +7,7 @@ from my_admin.views import movie
 from my_admin.views import announcement
 from my_admin.views import release
 from my_admin.views import customer
+from my_admin.views import order
 
 urlpatterns = [
     # admin home page
@@ -56,4 +57,6 @@ urlpatterns = [
     # customer info management
     path('customer/<int:pIndex>', customer.index, name="admin_customer_index"),
 
+    # order info management
+    path('order/<int:pIndex>', order.index, name="admin_order_index"),
 ]
