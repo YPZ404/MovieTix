@@ -195,14 +195,20 @@
 
                 function book(){
                     for (let[key,value] of seatMap){
-                        console.log("booked seats"+value);
+                        console.log("booked seats "+value);
                         // seatsBooking.push(value);
                         seats_content = seats_content + value +' ';
 
                     }
                     
-                
-                $.ajax({
+                    Modal.confirm({
+                            msg: 'abd',
+                            title: 'book result',
+                            btnok: 'yes',
+                            btncl: 'no'
+                        }).on(function (e){
+                            if (e) {
+                                $.ajax({
                     type:'post',
                     url:"/movie_web/movie/book",
                     dataType:'json',
@@ -223,6 +229,30 @@
                         })
                     },
                 });
+                            }
+                        })
+                
+                // $.ajax({
+                //     type:'post',
+                //     url:"/movie_web/movie/book",
+                //     dataType:'json',
+                //     data:{
+                //         csrfmiddlewaretoken: csrftoken,
+                //         release_id:release,
+                //         seat_list:seats_content,
+                //     },
+                    
+                //     async: false,
+                //     success:function(res){
+                //         Modal.alert({
+                //             msg: res['info'],
+                //             title: 'book result',
+                //             btnok: 'ok',
+                //         }).on(function (e){
+                //             window.location.href = '/movie_web'
+                //         })
+                //     },
+                // });
             }
             </script>
     
