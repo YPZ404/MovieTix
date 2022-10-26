@@ -16,7 +16,7 @@ class CustomerMiddleware(object):
         print("url:" + path)
 
         # url judgement
-        urllist = ['/movie_web/loadLogin', '/movie_web/login', '/movie_logout/logout', '/movie_web/verify','/movie_web/register','/movie_web/doRegister']
+        urllist = ['/movie_web/loadLogin', '/movie_web/login', '/movie_logout/logout', '/movie_web/verify','/movie_web/register','/movie_web/doRegister','/movie_web/']
         # whether the url is going to customer
         if re.match(r"^/movie_web", path) and (path not in urllist):
             # judge whether the user is logged in

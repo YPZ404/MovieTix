@@ -96,6 +96,17 @@
                 const phone = document.getElementById("phone")
                 const email = document.getElementById("email")
                 const bankcard = document.getElementById("bank_card")
+                //Bank card binding check
+                window.onload = function(){
+                  if(bankcard.value =='None' || bankcard.value.length == 0){
+                    Modal.alert({
+                      msg: "Need to bind your bank account before using the system to book tickets.",
+                      title: 'Bind card alert',
+                      btnok: 'ok',
+                    }).on(function (e) {});
+                  }
+                }
+                
                 function checkFrom(){
                     const passwordValue = password.value.trim()
                     const nameValue = name.value.trim();
@@ -173,10 +184,10 @@
                 function bindCard(){
                   var card = prompt("Please enter your bank card","");
                   if(!isNumber(card)){
-                    alert("Invalid bank card!")
+                    alert("Binding failed.")
                   }else{
                     alert("Bind to bank card" + card);
-                    document.getElementById("bank_card").value = card;
+                    bankcard.value = card;
                   }
                 }
             </script>
