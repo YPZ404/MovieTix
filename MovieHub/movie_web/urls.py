@@ -23,5 +23,6 @@ urlpatterns = [
     path('movie/<int:pIndex>', movie.index, name="customer_movie_index"),
     path('releaseList/<int:pIndex>', movie.releaseList, name="customer_release_list"),
     path('loadBooking/<int:release_id>', movie.loadBooking, name="customer_load_booking"),
+    path('movie/book', movie.bookMovie, name="customer_book_movie")
 
 ]

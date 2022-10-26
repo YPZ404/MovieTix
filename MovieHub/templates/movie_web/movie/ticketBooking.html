@@ -8,6 +8,7 @@
 
 {% block main_body %}   
 
+
      <!-- Content Header (Page header) -->
     <section class="content-header" style="color: #5372fb;font-weight: bold; font-style: italic;">
         <h4>
@@ -44,7 +45,7 @@
                         <p style="color: #FBBC53;font-weight: bold; font-size: larger;">Selected Seats </p>
                         <div id="selected_seat"></div>
                         <br>
-                        <button id="bookButton" type="button" style="color: #d953fb;" onclick="seatPost()">Book</button>
+                        <button id="bookButton" type="button" style="color: #d953fb;" onclick="book()">Book</button>
                         <div id="errMsg"></div>
                     </div>
     
@@ -56,7 +57,43 @@
             </div>
         
             <script>
+
+	function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+
+	function csrfSafeMethod(method) {
+	// these HTTP methods do not require CSRF protection
+	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	}
+
+    $.ajaxSetup({
+	  beforeSend: function (xhr, settings) {
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+		  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		}
+	  }
+	});
+
+
+
                 const seatMap = new Map();
+                // const seatsBooking = [];
+                var release = {{release_id}};
+                var seats_content ='';
                 $(document).ready(function(){
                 
                                 var seat_num ;
@@ -118,13 +155,75 @@
             
                 });
 
+                // function httpPost(URL, PARAMS) {
+                //     var temp = document.createElement("form");
+                //     temp.action = URL;
+                //     temp.method = "post";
+                //     temp.style.display = "none";
+                
+                //     for (var x in PARAMS) {
+                //          var opt = document.createElement("textarea");
+                //          opt.name = x;
+                //          opt.value = PARAMS[x];
+                //          temp.appendChild(opt);
+                //         }
+                    
+                //     document.body.appendChild(temp);
+                //     temp.submit();
+                //     return temp;
+                // }
 
-                function seatPost(){
+
+
+                // function seatPost(){
+                //     for (let[key,value] of seatMap){
+                //         console.log("预定座位"+value);
+                //         seatsBooking.push(value);
+                //     }
+
+                //     var release = {{release_id}};
+
+                //     // var params ={
+                //     //     "release": release,
+                //     //     "seats": seatsBooking,
+                //     // };
+
+                //     var httpUrl = "{% url 'customer_book_movie' %}"
+                //     httpPost(httpUrl, params)
+                // }
+
+
+                function book(){
                     for (let[key,value] of seatMap){
-                        console.log("预定座位"+value)
-                    }
-                }
+                        console.log("booked seats"+value);
+                        // seatsBooking.push(value);
+                        seats_content = seats_content + value +' ';
 
+                    }
+                    
+                
+                $.ajax({
+                    type:'post',
+                    url:"/movie_web/movie/book",
+                    dataType:'json',
+                    data:{
+                        csrfmiddlewaretoken: csrftoken,
+                        release_id:release,
+                        seat_list:seats_content,
+                    },
+                    
+                    async: false,
+                    success:function(res){
+                        Modal.alert({
+                            msg: res['info'],
+                            title: 'book result',
+                            btnok: 'ok',
+                        }).on(function (e){
+                            window.location.href = '/movie_web'
+                        })
+                    },
+                });
+            }
             </script>
     
 

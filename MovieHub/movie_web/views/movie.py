@@ -1,6 +1,6 @@
 from platform import release
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 from datetime import datetime
 from my_admin.models import Movie, Room, Release
@@ -112,3 +112,13 @@ def loadBooking(request, release_id):
         print(err)
         context = {'info': 'Cannot book the movie'}
     return render(request, 'movie_web/movie/ticketBooking.html', context)
+
+
+def bookMovie(request):
+    releaseId = request.POST['release_id']
+    seatList = request.POST['seat_list']
+
+    print(releaseId)
+    print(seatList)
+
+    return JsonResponse({'info': 'successfully booked'})
