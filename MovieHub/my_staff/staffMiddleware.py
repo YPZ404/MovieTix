@@ -21,7 +21,7 @@ class StaffMiddleware(object):
         # whether the url is going to staff
         if re.match(r"^/my_staff", path) and (path not in urllist):
             # judge whether the staff is logged in
-            if "adminuser" not in request.session:
+            if "staffuser" not in request.session:
                 # go to the login interface
                 return redirect(reverse('staff_load_login'))
 

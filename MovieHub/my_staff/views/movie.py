@@ -66,7 +66,7 @@ def insert(request):
             context = {'info': "Add new movie fails,no poster upload"}
             return render(request, 'my_staff/info.html', context)
         poster = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "." + posterFile.name.split('.').pop()
-        destination = open(r'C:\Users\13646\Documents\ELEC9609-Group10\movieHub\static\uploads\movie_pic\'' + poster)
+        destination = open("./static/uploads/movie_pic/" + poster, "wb+")
         for chunk in posterFile.chunks():
             destination.write(chunk)
         destination.close()
@@ -76,6 +76,7 @@ def insert(request):
         ob.type = request.POST['type']
         ob.cast = request.POST['cast']
         ob.introduction = request.POST['introduction']
+        ob.duration = request.POST['duration']
         ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         context = {'info': "Add new movie successfully, movie_id is %s" % ob.movie_id}

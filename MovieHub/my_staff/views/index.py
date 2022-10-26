@@ -34,7 +34,7 @@ def login(request):
             context = {'info': 'verify code is wrong'}
             return render(request, "my_staff/index/loadLogin.html", context)
         if md5.hexdigest() == ob.password_hash and (ob.level == 0 or ob.level == 1):
-            request.session['adminuser'] = ob.toDict()
+            request.session['staffuser'] = ob.toDict()
             return redirect(reverse('staff_index'))
         elif md5.hexdigest() == ob.password_hash and (ob.level != 0 or ob.level != 0):
             context = {'info': 'no permission'}

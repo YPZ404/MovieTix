@@ -9,10 +9,11 @@ from my_admin.models import Movie
 from my_admin.models import Release
 from my_admin.models import Room
 from django.core.paginator import Paginator
-from datetime import datetime
+from datetime import datetime, timedelta
 import hashlib
 import string
 from my_staff.models import Seat
+
 
 # browse staff information
 def index(request, pIndex=1):
@@ -43,13 +44,46 @@ def index(request, pIndex=1):
         print(movie.toDict())
     return render(request, 'my_staff/release/index.html', context)
 
+
 # insert new staff action
 def insert(request):
     try:
         ob = Release()
+        while True:
+            release_id = random.randint(10000000, 99999999)
+            try:
+                release = Movie.objects.get(release_id=release_id)
+            except Exception as err:
+                ob.release_id = release_id
+                break
+            else:
+                continue
         roomId = request.POST['roomId']
+        movieId = request.POST['movieId']
+        ob.movie_id = movieId
+        ob.room_id = roomId
+        ob.price = request.POST['price']
+        ob.is_delete = 0
+        releaseTime = request.POST['releaseTime']
+        now = datetime.strptime(releaseTime, "%Y-%m-%dT%H:%M")
+        zeroToday = now - timedelta(hours=now.hour, minutes=now.minute)
+        zeroTomorrow = zeroToday + timedelta(days=1)
+        print(zeroToday)
+        print(zeroTomorrow)
+        releases = Release.objects
+        num = releases.all().filter(
+            Q(release_time__gte=zeroToday) & Q(release_time__lte=zeroTomorrow) & Q(room_id=roomId)).__len__()
+        if num > 0:
+            context = {'info': "the selected release time has been taken up by other movies, please select a new time"}
+            return render(request, 'my_staff/info.html', context)
+        ob.release_time = releaseTime
+        ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        context = {'info': "Release new movie successfully, release_id is %s" % ob.release_id}
+        ob.save()
         Room.objects.get(room_id=roomId)
-        rowSize =  Room.objects.get(room_id=roomId).row_size
+        rowSize = Room.objects.get(room_id=roomId).row_size
         columnSize = Room.objects.get(room_id=roomId).column_size
         while True:
             release_id = random.randint(10000000, 99999999)
@@ -61,8 +95,8 @@ def insert(request):
             else:
                 continue
 
-        for a in range(1, rowSize+1):
-            for b in range(1, columnSize+1):
+        for a in range(1, rowSize + 1):
+            for b in range(1, columnSize + 1):
                 oa = Seat()
                 oa.release_id = release_id
                 oa.room_id = request.POST['roomId']
@@ -70,17 +104,6 @@ def insert(request):
                 oa.column_id = b
                 oa.is_available = 0
                 oa.save()
-
-        ob.movie_id = request.POST['movieId']
-        ob.room_id = request.POST['roomId']
-        ob.price = request.POST['price']
-        ob.is_delete = 0
-        ob.release_time = request.POST['releaseTime']
-        ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        context = {'info': "Release new movie successfully, release_id is %s" % ob.release_id}
-        ob.save()
     except Exception as err:
         print(err)
         context = {'info': "Room ID dose not exist, releasing new movie fails"}
@@ -114,6 +137,7 @@ def update(request):
         print(err)
         context = {'info': 'Update Failed'}
     return render(request, 'my_staff/info.html', context)
+
 
 def checkOrderNum(request, movieId=0):
     num = Release.objects.filter(movie_id=movieId, release_time__gt=datetime.now()).__len__()

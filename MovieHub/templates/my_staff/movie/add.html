@@ -55,14 +55,13 @@
 
 
 
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label" >I:</label>
-
-                            <div class="col-sm-4">
-                                <input type="text" name="duration"  class="form-control" id="duration" >
-                                <small class="error-message" style="color: red"></small>
+                          <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label" >Duration:</label>
+                              <div class="col-sm-4">
+                                <input type="text" name="duration"  class="form-control" id="duration" placeholder="must be integer" >
+                                  <small class="error-message" style="color: red"></small>
                             </div>
-                        </div>
+                            </div>
 
 
                         <div class="form-group">
@@ -93,12 +92,20 @@
                 const type = document.getElementById("type");
                 const cast = document.getElementById("cast");
                 const introduction = document.getElementById("introduction");
+                const duration = document.getElementById("duration");
                 function check() {
                     const nameValue = name.value.trim();
+                    const durationValue = duration.value;
                     const typeValue = type.value.trim();
                     const castValue = cast.value.trim();
                     const introductionValue = introduction.value.trim();
                     const err = [];
+                    if (!isNumber(durationValue)) {
+                        err.push("error")
+                        setError(duration, "the duration must be integer")
+                    }else {
+                        removeError(duration)
+                    }
                     if (nameValue == ""){
                         setError(name,"the name cannot be empty")
                         err.push("error")
@@ -145,6 +152,15 @@
                     const element_par = element.parentElement;
                     const errMsg = element_par.querySelector('.error-message');
                     errMsg.textContent = ' '
+                }
+
+                  function isNumber(element){
+                     let regPos = /^[0-9]*[1-9][0-9]*$/;
+                    if(regPos.test(element) ){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             </script>
         </div>

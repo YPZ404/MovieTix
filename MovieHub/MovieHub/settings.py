@@ -54,7 +54,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'my_admin.adminMiddleware.AdminMiddleware',
-    'movie_web.customerMiddleware.CustomerMiddleware'
+    'movie_web.customerMiddleware.CustomerMiddleware',
+    'my_staff.staffMiddleware.StaffMiddleware'
 ]
 
 ROOT_URLCONF = 'MovieHub.urls'
