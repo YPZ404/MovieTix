@@ -7,6 +7,7 @@ import hashlib
 from my_admin.models import Staff
 from my_admin.models import Announcement
 from my_admin.models import Customer
+from my_admin.models import Order
 from datetime import datetime, timedelta
 # Create your views here.
 from django.http import HttpResponse
@@ -14,16 +15,24 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    staffs = Staff.objects
-    numOfStaff = staffs.all().__len__()
-    customers = Customer.objects
-    numOfCustomers = customers.all().__len__()
     now = datetime.now()
     zeroToday = now - timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,
                                 microseconds=now.microsecond)
+    beforeWeek = now - timedelta(days=7)
+    staffs = Staff.objects
+    numOfStaff = staffs.all().__len__()
+    customers = Customer.objects
+    numOfCustomers = customers.all().filter(create_time__gte=beforeWeek).__len__()
     announcements = Announcement.objects
     todayAnnouncement = announcements.all().filter(create_time__gte=zeroToday).__len__()
-    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement,'numOfCustomer':numOfCustomers}
+    orders = Order.objects.all().filter(create_time__gte=beforeWeek)
+    numOfOrder = orders.__len__()
+    revenue = 0
+    for order in orders:
+        revenue = revenue + order.price
+
+    context = {'numOfStaff': numOfStaff, 'numOfTodayAnnouncement': todayAnnouncement, 'numOfCustomer': numOfCustomers,
+               'numOfOrder': numOfOrder, 'revenue': revenue}
 
     return render(request, 'my_admin/index/homepage.html', context)
 
