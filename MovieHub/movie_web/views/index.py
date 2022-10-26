@@ -40,10 +40,10 @@ def doRegister(request):
         
         # Invalid input
         if not re.search(u'^[_a-zA-Z0-9\u4e00-\u9fa5]+$', username) or len(username)==0 or len(username)>20:
-            context = {'info': 'Username must be invalid within 20 characters'}
+            context = {'info': 'Username must be within 20 characters'}
             return render(request, "movie_web/index/register.html", context)
         if not re.search(u'^[A-Za-z]+$', name) or len(name)==0 or len(name)>20:
-            context = {'info': 'Name must be invalid within 20 characters'}
+            context = {'info': 'Name must be within 20 characters'}
             return render(request, "movie_web/index/register.html", context)
         if not re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email):
             context = {'info': 'Email is invalid'}
