@@ -25,16 +25,6 @@
                     Screen
                 </p>
                 </span>
-                <!-- <div id="seats">
-                    {% for row in rows %}
-                    <div class="seatsRaw">
-                        {% for column in columns %}
-                        <div class="seat"></div>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                </div> -->
-
                 <div id="seats">
                     {% for row in seat_list %}
                     <div class="seatsRaw">
@@ -54,7 +44,7 @@
                         <p style="color: #FBBC53;font-weight: bold; font-size: larger;">Selected Seats </p>
                         <div id="selected_seat"></div>
                         <br>
-                        <button id="bookButton" type="button" style="color: #d953fb;">Book</button>
+                        <button id="bookButton" type="button" style="color: #d953fb;" onclick="seatPost()">Book</button>
                         <div id="errMsg"></div>
                     </div>
     
@@ -66,12 +56,13 @@
             </div>
         
             <script>
+                const seatMap = new Map();
                 $(document).ready(function(){
                 
                                 var seat_num ;
-                                var total_cost      = 0 ;
-                                var pricePerTicked  = {{ price }};
-                                var maximumSeats    = 4;
+                                var total_cost = 0 ;
+                                var pricePerTicked = {{ price }};
+                                var maximumSeats = 4;
                 
                                 $('#bookButton').hide(); // Hide the book button
                 
@@ -96,6 +87,8 @@
                 
                                             console.log(currentSeatClass);
                                              $( "#selected_seat ."+currentSeatClass ).remove();
+                                             
+                                             seatMap.delete(currentSeatClass);
                 
                                         }else if($(this).hasClass('occupied')){
 
@@ -107,6 +100,8 @@
                                             var column_num = parseInt( $(this).index() ) + 1;
                                             var row_num = parseInt( $(this).parent().index() )+1;    
                                             $( "#selected_seat" ).append("<span class='your_selected_seat seat"+row_num+"-"+column_num+" '> Seat Number: <b style='color:#EAABFF'>" + row_num+"-"+column_num +"</b> </br></span>");
+                                            var currentSeatClass = $(this).attr('class').split(' ')[1];
+                                            seatMap.set(currentSeatClass,currentSeatClass)
                                         }else {
                                             $('#errMsg').html('Your selection is over the limit.');    
                                         }
@@ -122,6 +117,14 @@
                                 });
             
                 });
+
+
+                function seatPost(){
+                    for (let[key,value] of seatMap){
+                        console.log("预定座位"+value)
+                    }
+                }
+
             </script>
     
 
