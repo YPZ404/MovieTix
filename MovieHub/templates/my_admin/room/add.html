@@ -34,7 +34,7 @@
                   <label for="inputEmail3" class="col-sm-2 control-label" >Row Size:</label>
 
                   <div class="col-sm-4">
-                    <input type="text" name="rowSize"  class="form-control" id="rowSize" placeholder="max value is 10">
+                    <input type="text" name="rowSize"  class="form-control" id="rowSize" placeholder="max value is 9">
                       <small class="error-message" style="color: red"></small>
                   </div>
                 </div>
@@ -43,7 +43,7 @@
                   <label for="inputEmail3" class="col-sm-2 control-label">Column Size:</label>
 
                   <div class="col-sm-4">
-                    <input type="text" name="columnSize"  class="form-control" id="columnSize" placeholder="max value is 10">
+                    <input type="text" name="columnSize"  class="form-control" id="columnSize" placeholder="max value is 9">
                       <small class="error-message" style="color: red"></small>
                   </div>
                 </div>
@@ -80,13 +80,13 @@
                     }
                     if (!isLessTenNumber(rowSizeValue)) {
                         err.push("error")
-                        setError(rowSize, "the row size must be integer and max value is 10")
+                        setError(rowSize, "the row size must be integer and less than 10")
                     }else {
                         removeError(rowSize)
                     }
                     if (!isLessTenNumber(columnSizeValue)) {
                         err.push("error")
-                        setError(columnSize, "the column size must be integer and max value is 10")
+                        setError(columnSize, "the column size must be integer and less than 10")
                     }else {
                         removeError(columnSize)
                     }
@@ -106,7 +106,7 @@
                 }
 
                 function isLessTenNumber(element){
-                    let regPos = /^([0-9]|10)$/;
+                    let regPos = /^([1-9])$/;
                     if(regPos.test(element) ){
                         return true;
                     }else{
