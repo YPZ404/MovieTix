@@ -5,7 +5,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 import hashlib
 import re
-from my_admin.models import Customer
+from my_admin.models import Customer, Movie, Order
 
 from datetime import datetime, timedelta
 from my_admin.models import Announcement
@@ -45,7 +45,7 @@ def doRegister(request):
         if not re.search(u'^[A-Za-z]+$', name) or len(name)==0 or len(name)>20:
             context = {'info': 'Name must be within 20 characters'}
             return render(request, "movie_web/index/register.html", context)
-        if not re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email):
+        if not re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) or len(email)==0 :
             context = {'info': 'Email is invalid'}
             return render(request, "movie_web/index/register.html", context)
         if request.POST["verifyCode"] != request.session["verifyCode"]:
@@ -129,8 +129,10 @@ def verify(request):
 
 
 def home(request):
-    num_of_movies = 7
-    num_of_orders = 10
+    movie_obs = Movie.objects
+    order_obs = Order.objects
+    num_of_movies = movie_obs.all().__len__()
+    num_of_orders = order_obs.all().__len__()
     now = datetime.now()
     zero_today = now - timedelta(hours=now.hour, minutes=now.minute, seconds=now.second,
                                 microseconds=now.microsecond)
