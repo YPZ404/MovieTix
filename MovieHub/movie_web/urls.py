@@ -1,7 +1,6 @@
 from django.urls import path
-from movie_web.views import customer
-from movie_web.views import index
-from movie_web.views import movie
+from movie_web.views import customer, index, movie, announcement
+
 urlpatterns = [
     # movie web home page
     path('', index.index, name="welcome"),
@@ -18,6 +17,10 @@ urlpatterns = [
     # Profile management
     path('customer', customer.edit, name="customer_edit"),
     path('customer/update', customer.update, name="customer_update"),
+
+    # announcement information
+    path('announcement/<int:pIndex>', announcement.index, name="customer_announcement_index"),
+    path('announcement/view/<int:announcementId>', announcement.view, name="customer_announcement_view"),
 
     # Movie page
     path('movie/<int:pIndex>', movie.index, name="customer_movie_index"),
