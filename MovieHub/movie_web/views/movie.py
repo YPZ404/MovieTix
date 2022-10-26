@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from datetime import datetime
-from my_admin.models import Movie, Room
-from my_admin.models import Release
+from my_admin.models import Movie, Room, Release
+from my_staff.models import Seat
 from django.db.models import Q
 from django.core import serializers
 import json
@@ -88,8 +88,25 @@ def loadBooking(request, release_id):
         price = release_ob.price
         release_time = release_ob.release_time
 
+        seat_obs = Seat.objects.filter(release_id = release_id)
+        rows = range(1,row_size+1)
+        columns = range(1,column_size+1)
+        seat_list = []
+        for row in rows:
+            row_seat_obs = seat_obs.filter(row_id = row)
+            row_seats = []
+            for column in columns:
+                seat_ob = row_seat_obs.get(column_id = column)
+                seat = seat_ob.toDict()
+                row_seats.append(seat)
+            seat_list.append(row_seats)
+
+
         context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
-         'rows':range(0,row_size), 'columns':range(0,column_size), 'price':price, 'release_time':release_time}
+        'seat_list':seat_list, 'price':price, 'release_time':release_time}
+
+        # context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
+        #  'rows':range(0,row_size), 'columns':range(0,column_size), 'price':price, 'release_time':release_time}
         return render(request, 'movie_web/movie/ticketBooking.html', context)
     except Exception as err:
         print(err)

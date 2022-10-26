@@ -9,14 +9,15 @@
 {% block main_body %}   
 
      <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h4>
-          Ticket Booking
-      </h4>
+    <section class="content-header" style="color: #5372fb;font-weight: bold; font-style: italic;">
+        <h4>
+            {{movie_name}}
+            Room: {{room_id}}
+        </h4>
+        <h4>
+            {{release_time}}
+        </h4>
     </section>
-
-      
-            <!--BOOKING SECTION START-->
 
             <div style="width:850px;margin: auto auto;">
                 <span id='screen'>
@@ -24,11 +25,25 @@
                     Screen
                 </p>
                 </span>
-                <div id="seats">
+                <!-- <div id="seats">
                     {% for row in rows %}
                     <div class="seatsRaw">
                         {% for column in columns %}
                         <div class="seat"></div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div> -->
+
+                <div id="seats">
+                    {% for row in seat_list %}
+                    <div class="seatsRaw">
+                        {% for seat in row %}
+                        {% if seat.is_available == 1 %}
+                        <div class="seat occupied"></div>
+                        {% else %}
+                        <div class="seat"></div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                     {% endfor %}
@@ -66,6 +81,9 @@
                                     seat_num = row_num+"-"+column_num ;  
                                     $(this).text(seat_num); // seat number
                                     $(this).addClass("seat"+seat_num); //add css
+                                    if($(this).hasClass('occupied')){
+                                        $(this).css('background-color','#FF0000'); // this seat has been occupied
+                                    }
                                 });
                 
                                 $("#seats .seat").click(function() {  
@@ -79,6 +97,8 @@
                                             console.log(currentSeatClass);
                                              $( "#selected_seat ."+currentSeatClass ).remove();
                 
+                                        }else if($(this).hasClass('occupied')){
+
                                         }else if($(".your_selected_seat").length<maximumSeats && !$(this).hasClass('select')){ // check number of seats
                                             $(this).css('background-color','#71DCAA'); // add color
                                             $(this).addClass("select"); // add css
