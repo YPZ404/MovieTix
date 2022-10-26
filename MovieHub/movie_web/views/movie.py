@@ -1,13 +1,17 @@
 from platform import release
+import random
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 from datetime import datetime
-from my_admin.models import Movie, Room, Release
+from my_admin.models import Movie, Room, Release, Order
 from my_staff.models import Seat
 from django.db.models import Q
 from django.core import serializers
 import json
+
+
 # Create your views here.
 
 # browse movie information
@@ -19,7 +23,8 @@ def index(request, pIndex=1):
 
     # keyword research
     if keyWord:
-        movieList = movieList.filter(Q(movie_name__icontains=keyWord) | Q(type__icontains=keyWord)| Q(cast__icontains=keyWord))
+        movieList = movieList.filter(
+            Q(movie_name__icontains=keyWord) | Q(type__icontains=keyWord) | Q(cast__icontains=keyWord))
         condition.append('keyword=' + keyWord)
 
     # In page by 10 record
@@ -37,6 +42,7 @@ def index(request, pIndex=1):
     for st in movieList:
         print(st)
     return render(request, 'movie_web/movie/index.html', context)
+
 
 def releaseList(request, pIndex=1):
     model = Release.objects
@@ -61,49 +67,49 @@ def releaseList(request, pIndex=1):
     releaseList2 = page.page(pIndex)  # acquire current page info
     pageNum = page.page_range  # acquire num of page
     print(pageNum)
-    context = {"releaseList": [], 
-    'pageNum': list(pageNum), 
-    'pIndex': int(pIndex), 
-    'maxPages': int(maxPages),
-    'condition': condition}
+    context = {"releaseList": [],
+               'pageNum': list(pageNum),
+               'pIndex': int(pIndex),
+               'maxPages': int(maxPages),
+               'condition': condition}
     for st in releaseList:
         print(st)
-    json_data = serializers.serialize('json', releaseList2) # 将查询结果进行json序列化
+    json_data = serializers.serialize('json', releaseList2)  # 将查询结果进行json序列化
     context['releaseList'] = json_data
     return HttpResponse(json.dumps(context), content_type="application/json")
+
 
 # load movie booking page
 def loadBooking(request, release_id):
     rIndex = int(release_id)
     try:
         # Selected movie to book
-        release_ob = Release.objects.get(release_id = rIndex)
+        release_ob = Release.objects.get(release_id=rIndex)
         movie_id = release_ob.movie_id
-        movie_ob = Movie.objects.get(movie_id = movie_id)
+        movie_ob = Movie.objects.get(movie_id=movie_id)
         movie_name = movie_ob.movie_name
         room_id = release_ob.room_id
-        room_ob = Room.objects.get(room_id = room_id)
+        room_ob = Room.objects.get(room_id=room_id)
         row_size = room_ob.row_size
         column_size = room_ob.column_size
         price = release_ob.price
         release_time = release_ob.release_time
 
-        seat_obs = Seat.objects.filter(release_id = release_id)
-        rows = range(1,row_size+1)
-        columns = range(1,column_size+1)
+        seat_obs = Seat.objects.filter(release_id=release_id)
+        rows = range(1, row_size + 1)
+        columns = range(1, column_size + 1)
         seat_list = []
         for row in rows:
-            row_seat_obs = seat_obs.filter(row_id = row)
+            row_seat_obs = seat_obs.filter(row_id=row)
             row_seats = []
             for column in columns:
-                seat_ob = row_seat_obs.get(column_id = column)
+                seat_ob = row_seat_obs.get(column_id=column)
                 seat = seat_ob.toDict()
                 row_seats.append(seat)
             seat_list.append(row_seats)
 
-
-        context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
-        'seat_list':seat_list, 'price':price, 'release_time':release_time}
+        context = {'movie_name': movie_name, 'movie_id': movie_id, 'release_id': release_id, 'room_id': room_id,
+                   'seat_list': seat_list, 'price': price, 'release_time': release_time}
 
         # context = {'movie_name':movie_name, 'movie_id':movie_id, 'release_id':release_id, 'room_id':room_id,
         #  'rows':range(0,row_size), 'columns':range(0,column_size), 'price':price, 'release_time':release_time}
@@ -116,9 +122,40 @@ def loadBooking(request, release_id):
 
 def bookMovie(request):
     releaseId = request.POST['release_id']
-    seatList = request.POST['seat_list']
+    seatContent = request.POST['seat_content']
+    seatList = seatContent.split(' ')
+    numOfSeat = seatList.__len__()
+    username = request.session['logineduser']['username']
+    releaseObject = Release.objects.get(release_id=releaseId)
+    movieName = Movie.objects.get(movie_id=releaseObject.movie_id).movie_name
+    price = releaseObject.price
+    totalPrice = price * numOfSeat
 
-    print(releaseId)
-    print(seatList)
+    try:
+        ob = Order()
+        ob.order_id = random.randint(10000000, 99999999)
+        ob.customer_username = username
+        ob.room_id = releaseObject.room_id
+        ob.seat_content = seatContent
+        ob.seat_num = numOfSeat
+        ob.release_id = releaseId
+        ob.movie_name = movieName
+        ob.price = totalPrice
+        ob.is_cancel = 0
+        ob.is_pay = 0
+        ob.release_time = releaseObject.release_time
+        ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ob.save()
+    except Exception as err:
+        print(err)
+        return JsonResponse({'info': 'book fails'})
 
-    return JsonResponse({'info': 'successfully booked'})
+    for seat in seatList:
+        row = seat[4]
+        column = seat[6]
+        seatObject = Seat.objects.get(release_id=releaseId, row_id=row, column_id=column)
+        seatObject.is_available = 1
+        seatObject.save()
+
+    return JsonResponse({'info': 'successfully booked, click button to order page to pay this order '})

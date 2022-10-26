@@ -120,3 +120,31 @@ class Customer(models.Model):
 
     class Meta:
         db_table = "Customer"
+
+
+class Order(models.Model):
+    order_id = models.IntegerField()
+    customer_username = models.CharField(max_length=20)
+    room_id = models.IntegerField()
+    seat_content = models.CharField(max_length=255)
+    seat_num = models.IntegerField()
+    release_id = models.IntegerField()
+    movie_name = models.CharField(max_length=40)
+    price = models.FloatField()
+    is_cancel = models.IntegerField()
+    is_pay = models.IntegerField()
+    release_time = models.DateTimeField(default=datetime.now)
+    create_time = models.DateTimeField(default=datetime.now)
+    update_time = models.DateTimeField(default=datetime.now)
+
+    def toDict(self):
+        return {'order_id': self.order_id, 'customer_username': self.customer_username, 'room_id': self.room_id,
+                'seat_content': self.seat_content, 'seat_num': self.seat_num, 'release_id': self.release_id,
+                'movie_name': self.movie_name,
+                'price': self.price, 'is_cancel': self.is_cancel, 'is_pay':self.is_pay,
+                'release_time': self.release_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'create_time': self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'update_time': self.update_time.strftime('%Y-%m-%d %H:%M:%S')}
+
+    class Meta:
+        db_table = "Order"

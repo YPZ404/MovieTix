@@ -194,10 +194,16 @@
 
 
                 function book(){
+                    const seatLen = seatMap.size
+                    let count = 1
                     for (let[key,value] of seatMap){
                         console.log("booked seats "+value);
                         // seatsBooking.push(value);
-                        seats_content = seats_content + value +' ';
+                        seats_content = seats_content + value;
+                        if (count < seatLen){
+                           seats_content = seats_content + " "
+                        }
+                        count++;
 
                     }
                     
@@ -215,7 +221,7 @@
                     data:{
                         csrfmiddlewaretoken: csrftoken,
                         release_id:release,
-                        seat_list:seats_content,
+                        seat_content:seats_content,
                     },
                     
                     async: false,
