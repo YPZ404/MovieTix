@@ -48,7 +48,7 @@ def login(request):
 
 
 def logout(request):
-    del request.session['adminuser']
+    del request.session['staffuser']
     return redirect(reverse('staff_load_login'))
 
 
