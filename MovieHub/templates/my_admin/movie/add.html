@@ -107,9 +107,9 @@
                     }else {
                         removeError(name)
                     }
-                    if (!isNumber(durationValue)) {
+                    if (!isNumber(durationValue)||durationValue>180) {
                         err.push("error")
-                        setError(duration, "the duration must be integer")
+                        setError(duration, "the duration must be integer and less than 180")
                     }else {
                         removeError(duration)
                     }

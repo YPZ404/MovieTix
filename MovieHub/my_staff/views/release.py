@@ -52,7 +52,7 @@ def insert(request):
         while True:
             release_id = random.randint(10000000, 99999999)
             try:
-                release = Movie.objects.get(release_id=release_id)
+                release = Release.objects.get(release_id=release_id)
             except Exception as err:
                 ob.release_id = release_id
                 break
@@ -66,8 +66,8 @@ def insert(request):
         ob.is_delete = 0
         releaseTime = request.POST['releaseTime']
         now = datetime.strptime(releaseTime, "%Y-%m-%dT%H:%M")
-        zeroToday = now - timedelta(hours=now.hour, minutes=now.minute)
-        zeroTomorrow = zeroToday + timedelta(days=1)
+        zeroToday = now - timedelta(hours=3)
+        zeroTomorrow = now+timedelta(hours=3)
         print(zeroToday)
         print(zeroTomorrow)
         releases = Release.objects
@@ -85,15 +85,7 @@ def insert(request):
         Room.objects.get(room_id=roomId)
         rowSize = Room.objects.get(room_id=roomId).row_size
         columnSize = Room.objects.get(room_id=roomId).column_size
-        while True:
-            release_id = random.randint(10000000, 99999999)
-            try:
-                release = Movie.objects.get(release_id=release_id)
-            except Exception as err:
-                ob.release_id = release_id
-                break
-            else:
-                continue
+
 
         for a in range(1, rowSize + 1):
             for b in range(1, columnSize + 1):
