@@ -8,11 +8,14 @@ from my_admin.models import Release
 from django.db.models import Q
 from django.core import serializers
 from my_staff.models import Seat
+from django.utils import timezone
 import json
 
 def index(request, pIndex=1):
+    username = request.session['logineduser']['username']
     model = Order.objects
     orderList = model.all()
+    orderList = orderList.filter(customer_username=username)
     condition = []
     # In page by 10 record
     pIndex = int(pIndex)
@@ -29,9 +32,11 @@ def index(request, pIndex=1):
         limitTime = obj.release_time - timedelta(minutes=15)
         print(limitTime.tzinfo)
         print(datetime.now().tzinfo)
+        print(timezone.now().tzinfo)
         limitTime=limitTime.replace(tzinfo=None)
         print(limitTime)
         print(datetime.now())
+        print(timezone.now())
         print(limitTime < datetime.now())
         if(limitTime < datetime.now()):
             obj.is_cancel = 2
