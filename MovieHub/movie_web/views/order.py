@@ -17,7 +17,7 @@ def index(request, pIndex=1):
     orderList = model.all()
     orderList = orderList.filter(customer_username=username)
     condition = []
-    # In page by 10 record
+    # In page by 10 record 
     pIndex = int(pIndex)
     page = Paginator(orderList, 10)
     maxPages = page.num_pages
