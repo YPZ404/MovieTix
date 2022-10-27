@@ -46,5 +46,21 @@ To release a new movie, just insert the movie name, room ID, price and release t
 To inform your clients the latest release or other information, you can post an announcement. This announcement will be sent to all clients.
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/6ee9a8cce243467d9a14db5968dbf816.png)
  
-<br><br><br>
+<br><br>
 You can also check the list of the staff and orders, however as a staff, you do not have right to modify them.
+
+##  How to use the code in your computer
+Please clone the code using: git clone https://github.sydney.edu.au/2022-INTERNET-SOFTWARE-PLATFORM/ELEC9609-Group10.git
+##### Create table in your database.
+Please running the sql code in sql file.
+
+###### Install Dependency
+Please ensure that you has install python3 and have upated your pip to the latest version.
+
+<kbd>pip install django</kbd>
+<kbd>pip install pymysql</kbd>
+<kbd>pip install PIL</kbd>
+<kbd>pip install pillow</kbd>  
+
+##### Running code
+Run  <kbd>python manage.py migrate</kbd> in your terminal.<kbd>cmd</kbd> 
