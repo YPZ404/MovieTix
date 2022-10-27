@@ -52,7 +52,13 @@ You can also check the list of the staff and orders, however as a staff, you do 
 ##  How to use the code in your computer
 Please clone the code using: git clone https://github.sydney.edu.au/2022-INTERNET-SOFTWARE-PLATFORM/ELEC9609-Group10.git
 ##### Create table in your database.
-Please running the sql code in sql file.
+Firstly in settings.py check the database name and the password, change that to your password and account.<br>
+There are two way to init the database.<br>
+The first way is: running the sql code in sql file.<br><br>
+The second way is: <br>
+<kbd>python manage.py makemigrations</kbd>
+<kbd>python manage.py migrate </kbd>
+
 
 ###### Install Dependency
 Please ensure that you has install python3 and have upated your pip to the latest version.
