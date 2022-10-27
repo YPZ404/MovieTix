@@ -71,12 +71,12 @@
                             <li class="user-header">
                                 <img src="{% static 'my_staff/dist/img/user2-160x160.jpg'%}" class="img-circle" alt="User Image">
                                 <p>
-                                    {{ request.session.adminuser.name }}
-                                    {% if request.session.adminuser.level == 0 %}
+                                    {{ request.session.staffuser.name }}
+                                    {% if request.session.staffuser.level == 0 %}
                                     <small>normal staff </small>
-                                    {% elif request.session.adminuser.level == 1 %}
+                                    {% elif request.session.staffuser.level == 1 %}
                                     <small>manager </small>
-                                    {% elif request.session.adminuser.level == 2 %}
+                                    {% elif request.session.staffuser.level == 2 %}
                                     <small>admin</small>
                                     {% endif %}
                                 </p>
@@ -186,7 +186,7 @@
 
 <script src="{% static 'my_staff/dist/js/edu-modal-alert-confirm.js'%}"></script>
 
-<script type="text/javascript" src="/static/my_staff/dist/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/static/my_admin/dist/js/jquery-1.8.2.min.js"></script>
 
 <script type="text/javascript">
     function doDel(url) {
