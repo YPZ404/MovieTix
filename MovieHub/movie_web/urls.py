@@ -1,5 +1,5 @@
 from django.urls import path
-from movie_web.views import customer, index, movie, announcement
+from movie_web.views import customer, index, movie, order, announcement
 
 urlpatterns = [
     # movie web home page
@@ -26,6 +26,9 @@ urlpatterns = [
     path('movie/<int:pIndex>', movie.index, name="customer_movie_index"),
     path('releaseList/<int:pIndex>', movie.releaseList, name="customer_release_list"),
     path('loadBooking/<int:release_id>', movie.loadBooking, name="customer_load_booking"),
-    path('movie/book', movie.bookMovie, name="customer_book_movie")
+    path('movie/book', movie.bookMovie, name="customer_book_movie"),
 
+    # order
+    path('order/<int:pIndex>', order.index, name="customer_order_index"),
+    path('order/cancel', order.cancel, name="customer_order_cancel"),
 ]

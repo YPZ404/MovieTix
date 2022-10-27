@@ -76,7 +76,7 @@ def releaseList(request, pIndex=1):
                'condition': condition}
     for st in releaseList:
         print(st)
-    json_data = serializers.serialize('json', releaseList2)  # 将查询结果进行json序列化
+    json_data = serializers.serialize('json', releaseList2)  # json serialize
     context['releaseList'] = json_data
     return HttpResponse(json.dumps(context), content_type="application/json")
 
@@ -84,6 +84,8 @@ def releaseList(request, pIndex=1):
 # load movie booking page
 def loadBooking(request, release_id):
     release_id = int(release_id)
+    print("release_id=")
+    print(release_id)
     try:
         username = request.session['logineduser']['username']
         customer_ob = Customer.objects.get(username = username)
