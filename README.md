@@ -57,10 +57,10 @@ Please running the sql code in sql file.
 ###### Install Dependency
 Please ensure that you has install python3 and have upated your pip to the latest version.
 
-<kbd>pip install django</kbd>
-<kbd>pip install pymysql</kbd>
-<kbd>pip install PIL</kbd>
-<kbd>pip install pillow</kbd>  
+<kbd>pip install django</kbd> <br>
+<kbd>pip install pymysql</kbd> <br>
+<kbd>pip install PIL</kbd> <br>
+<kbd>pip install pillow</kbd> <br>
 
 ##### Running code
 Run  <kbd>python manage.py migrate</kbd> in your terminal.<kbd>cmd</kbd> 
