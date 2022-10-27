@@ -2,7 +2,7 @@ from platform import release
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator
-from datetime import datetime
+from datetime import datetime, timedelta
 from my_admin.models import Order
 from my_admin.models import Release
 from django.db.models import Q
@@ -23,6 +23,15 @@ def index(request, pIndex=1):
     if pIndex < 1:
         pIndex = 1
     orderList2 = page.page(pIndex)  # acquire current page info
+    for obj in orderList2:
+        print(obj)
+        if(obj.is_cancel==1):
+            continue
+        limitTime = obj.release_time - timedelta(minutes=15)
+        limitTime=limitTime.replace(tzinfo=None)
+        print(limitTime)
+        if(limitTime < datetime.now()):
+            obj.is_cancel = 2
     pageNum = page.page_range  # acquire num of page
     context = {"orderList": orderList2, 'pageNum': pageNum, 'pIndex': pIndex, 'maxPages': maxPages,
                'condition': condition}

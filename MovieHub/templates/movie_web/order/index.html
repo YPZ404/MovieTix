@@ -58,6 +58,8 @@
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> cancel order</a>
                       {% elif vo.is_cancel == 1 %}
                       <span style="color: grey">cancelled</span>
+                      {% elif vo.is_cancel == 2 %}
+                      <span style="color: grey">irrevocable</span>
                       {% endif %}
                   </td>
                 </tr>
