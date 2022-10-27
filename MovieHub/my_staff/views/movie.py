@@ -65,7 +65,7 @@ def insert(request):
         if not posterFile:
             context = {'info': "Add new movie fails,no poster upload"}
             return render(request, 'my_staff/info.html', context)
-        poster = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "." + posterFile.name.split('.').pop()
+        poster = datetime.now().strftime("%Y-%m-%d %H-%M-%S") + "." + posterFile.name.split('.').pop()
 
         ob.movie_name = request.POST['name']
         ob.poster = poster
