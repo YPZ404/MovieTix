@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head_block %}
-<link rel="stylesheet" href="{% static 'seatStyle.css'%}">
+<link rel="stylesheet" href="{% static '0seatStyle.css'%}">
 <script src="{% static 'my_admin/bower_components/jquery/dist/jquery.min.js'%}"></script>
 {% endblock %}
 
@@ -93,8 +93,8 @@
                 // const seatsBooking = [];
                 var release = {{release_id}};
                 var seats_content ='';
-                $(document).ready(function(){
                 
+                $(document).ready(function(){
                                 var seat_num ;
                                 var total_cost = 0 ;
                                 var pricePerTicked = {{ price }};

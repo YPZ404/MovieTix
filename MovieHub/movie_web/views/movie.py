@@ -158,15 +158,16 @@ def bookMovie(request):
         ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.save()
+        
+        for seat in seatList:
+            row = seat[4]
+            column = seat[6]
+            seatObject = Seat.objects.get(release_id=releaseId, row_id=row, column_id=column)
+            seatObject.is_available = 1
+            seatObject.save()
+
     except Exception as err:
         print(err)
         return JsonResponse({'info': 'booking failed'})
-
-    for seat in seatList:
-        row = seat[4]
-        column = seat[6]
-        seatObject = Seat.objects.get(release_id=releaseId, row_id=row, column_id=column)
-        seatObject.is_available = 1
-        seatObject.save()
-
+        
     return JsonResponse({'info': 'successfully booked, view details in the order page '})
