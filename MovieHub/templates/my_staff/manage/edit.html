@@ -87,8 +87,8 @@
                         removeError(releaseTime)
                     }
 
-                    if(priceValue <= 0){
-                        setError(price,"price must be positive")
+                     if( !isNumber(priceValue)){
+                        setError(price,"price must be positive value")
                         err.push("error")
                     }else {
                         removeError(price)
@@ -110,6 +110,15 @@
                     const element_par = element.parentElement;
                     const errMsg = element_par.querySelector('.error-message');
                     errMsg.textContent = ' '
+                }
+
+                function isNumber(element){
+                     let regPos =　/^(?!(0[0-9]{0,}$))[0-9]{1,}[.]{0,}[0-9]{0,}$/;
+                    if(regPos.test(element) ){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             </script>
         </div>
