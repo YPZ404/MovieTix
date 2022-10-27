@@ -22,11 +22,6 @@ urlpatterns = [
 
     # staff information management
     path('staff/<int:pIndex>', staff.index, name="staff_staff_index"),
-    path('staff/add', staff.add, name="staff_staff_add"),
-    path('staff/insert', staff.insert, name="staff_staff_insert"),
-    path('staff/delete/<int:staffId>', staff.delete, name="staff_staff_delete"),
-    path('staff/edit/<int:staffId>', staff.edit, name="staff_staff_edit"),
-    path('staff/update/', staff.update, name="staff_staff_update"),
 
     # room management
     path('room/<int:pIndex>', room.index, name="staff_room_index"),
