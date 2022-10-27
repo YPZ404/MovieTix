@@ -56,7 +56,7 @@ Firstly in settings.py check the database name and the password, change that to 
 There are two way to init the database.<br>
 The first way is: running the sql code in sql file.<br><br>
 The second way is: <br>
-<kbd>python manage.py makemigrations</kbd>
+<kbd>python manage.py makemigrations</kbd> <br>
 <kbd>python manage.py migrate </kbd>
 
 
