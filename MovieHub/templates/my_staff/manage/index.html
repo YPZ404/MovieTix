@@ -45,9 +45,9 @@
                         </tr>
                         {% for vo in releaseList %}
                         <tr>
-                            <td>{{ vo.release_id }}</td>
+                            <td onclick="doc({{ vo.release_id}})" >{{ vo.release_id }}</td>
                             <td> {{ vo.movie_id }}</td>
-                            <td>{{ vo.movie_name }}</td>
+                            <td >{{ vo.movie_name }}</td>
                             <td>{{ vo.room_id }}</td>
                             <td>{{ vo.release_time }}</td>
                             <td>{{ vo.price }}</td>

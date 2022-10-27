@@ -43,7 +43,7 @@
                         {% for vo in movieList %}
                         <tr>
                             <td>{{ vo.movie_id }}</td>
-                            <td onclick="doc({{ vo.movie_id }})">{{ vo.movie_name }}</td>
+                            <td>{{ vo.movie_name }}</td>
                             <td><img src="/static/uploads/movie_pic/{{ vo.poster }}" width="60"/></td>
                             <td>{{ vo.type }}</td>
                             <td>{{ vo.cast }}</td>

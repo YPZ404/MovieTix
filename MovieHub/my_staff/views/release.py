@@ -139,8 +139,8 @@ def update(request):
     return render(request, 'my_staff/info.html', context)
 
 
-def checkOrderNum(request, movieId=0):
-    num = Order.objects.filter(movie_id=movieId, is_cancel=0).__len__()
+def checkOrderNum(request, releaseId=0):
+    num = Order.objects.filter(release_id=releaseId, is_cancel=0).__len__()
     '''
     list = []
     for ob in releaseList:
