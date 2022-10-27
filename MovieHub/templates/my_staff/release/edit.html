@@ -71,13 +71,13 @@
             </div>
             <!-- /.box -->
             <script>
-
                 const releaseTime = document.getElementById("releaseTime");
-                const price = document.getElementById(("price"))
+                const price = document.getElementById("price");
                 function check() {
                     const err = [];
                     const releaseTimeValue = releaseTime.value
                     const priceValue = price.value
+
                     if( new Date(releaseTimeValue).getTime()-new Date().getTime() < 0 ){
                         setError(releaseTime,"must be over the current time")
                         err.push("error")
@@ -85,15 +85,15 @@
                         removeError(releaseTime)
                     }
 
-                    if(priceValue <= 0){
-                        setError(price,"price must be positive")
+                    if(!isNumber(priceValue)){
+                        setError(price,"price must be positive value")
                         err.push("error")
                     }else {
                         removeError(price)
                     }
 
                     if (err.length > 0) {
-                        return  false
+                        return false
                     }
                     return true
                 }
@@ -105,9 +105,18 @@
                 }
 
                 function removeError(element){
-                    const element_par = element.parentElement;
-                    const errMsg = element_par.querySelector('.error-message');
-                    errMsg.textContent = ' '
+                   const element_par = element.parentElement;
+                   const errMsg = element_par.querySelector('.error-message');
+                   errMsg.textContent = ' '
+                }
+
+                function isNumber(element){
+                     let regPos =　/^(?!(0[0-9]{0,}$))[0-9]{1,}[.]{0,}[0-9]{0,}$/;
+                    if(regPos.test(element) ){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             </script>
         </div>
