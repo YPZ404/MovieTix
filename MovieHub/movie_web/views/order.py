@@ -24,19 +24,20 @@ def index(request, pIndex=1):
         pIndex = 1
     orderList2 = page.page(pIndex)  # acquire current page info
     for obj in orderList2:
-        print(obj)
         if(obj.is_cancel==1):
             continue
         limitTime = obj.release_time - timedelta(minutes=15)
+        print(limitTime.tzinfo)
+        print(datetime.now().tzinfo)
         limitTime=limitTime.replace(tzinfo=None)
         print(limitTime)
+        print(datetime.now())
+        print(limitTime < datetime.now())
         if(limitTime < datetime.now()):
             obj.is_cancel = 2
     pageNum = page.page_range  # acquire num of page
     context = {"orderList": orderList2, 'pageNum': pageNum, 'pIndex': pIndex, 'maxPages': maxPages,
                'condition': condition}
-    for st in orderList:
-        print(st)
     return render(request, 'movie_web/order/index.html', context)
 
 def cancel(request):
