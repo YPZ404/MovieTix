@@ -52,10 +52,10 @@ def releaseList(request, pIndex=1):
     id = request.POST.get("movie_id", None)
     print(id)
     condition = []
-
+    now_time = datetime.now()
     # keyword research
     if id:
-        releaseList = releaseList.filter(movie_id=id)
+        releaseList = releaseList.filter(Q(movie_id=id)&Q(release_time__gte=now_time))
         condition.append('movie_id=' + id)
 
     # In page by 10 record

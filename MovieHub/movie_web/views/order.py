@@ -42,12 +42,13 @@ def cancel(request):
     order.is_cancel = 1
     order.save()
     seat_content = order.seat_content
+    release_id = order.release_id
     seats = seat_content.split(" ")
     for seat in seats:  
         print(seat)
         row = seat[4]
         column = seat[6]
-        seatList = Seat.objects.all().filter(Q(row_id=row) & Q(column_id=column)).delete()
+        seatList = Seat.objects.all().filter(Q(row_id=row) & Q(column_id=column)& Q(release_id=release_id))
         if(len(seatList)!=1):
             return JsonResponse({'info':'cancel failed!'})
         seatList[0].is_available = 0
