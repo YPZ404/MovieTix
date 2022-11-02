@@ -49,19 +49,23 @@ def add(request):
 
 # insert new room action
 def insert(request):
+
+    roomId = request.POST['roomId']
     try:
+        obTemp = Room.objects.get(room_id=roomId)
+    except Exception as err:
         ob = Room()
-        ob.room_id = request.POST['roomId']
+        ob.room_id = roomId
         ob.row_size = request.POST['rowSize']
         ob.column_size = request.POST['columnSize']
         ob.create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         context = {'info': "Add new room successfully"}
         ob.save()
-    except Exception as err:
-        print(err)
-        context = {'info': "Add new room fails, the room id has been used,please use another roomId"}
+        return render(request, 'my_admin/info.html', context)
+    context = {'info': "Add new room fails, the room id has been used,please use another roomId"}
     return render(request, 'my_admin/info.html', context)
+
 
 
 # load room edit form

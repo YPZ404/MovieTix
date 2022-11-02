@@ -39,7 +39,7 @@ urlpatterns = [
     path('movie/add', movie.add, name="admin_movie_add"),
     path('movie/insert', movie.insert, name="admin_movie_insert"),
     path('movie/edit/<int:movieId>', movie.edit, name="admin_movie_edit"),
-    path('movie/update/', movie.update, name="admin_movie_update"),
+    path('movie/update', movie.update, name="admin_movie_update"),
     path('movie/checkReleaseNum/<int:movieId>', movie.checkReleaseNum, name="admin_movie_check_release"),
 
     # announcement information management
