@@ -1,7 +1,4 @@
 from django.test import TestCase
-
-# Create your tests here.
-from django.test import TestCase
 from my_admin.models import Staff
 from my_admin.models import Room
 from my_admin.models import Movie
@@ -10,10 +7,8 @@ from my_admin.models import Release
 from my_admin.models import Order
 from my_staff.models import Seat
 from datetime import datetime, timedelta
-from django.test import Client
 
-# Create your tests here.
-
+#Test the model of staff
 class ModelTest(TestCase):
     # test initialization
 
@@ -23,6 +18,7 @@ class ModelTest(TestCase):
         self.assertEqual(result.room_id, 1)
         self.assertEqual(result.is_available, 0)
 
+#Test the login function of staff
 class StaffLoginTest(TestCase):
     def setUp(self):
         Staff.objects.create(staff_id=87654321, password_hash='b854bef1d3d0149616db267002fad7cd',
@@ -47,6 +43,7 @@ class StaffLoginTest(TestCase):
                                     {'staffId': '87654321', 'password': '1234567', 'verifyCode': '2333'})
         self.assertIn(b'password is incorrect', response.content)
 
+#Test staff's function to manage released movies.
 class ReleaseManagement(TestCase):
 
     def setUp(self):
@@ -62,7 +59,7 @@ class ReleaseManagement(TestCase):
         result = Release.objects.get(release_id=12345678)
         self.assertEqual(result.is_delete, 1)
 
-class ReleaseInformation(TestCase):
+'''class ReleaseInformation(TestCase):
 
     def setUp(self):
         Movie.objects.create(movie_id=12345678, movie_name="avatar", duration=120, type="adventure",
@@ -80,9 +77,9 @@ class ReleaseInformation(TestCase):
                                      'releaseTime': '2023-02-21T19:28'})
         print(response.content)
         #self.assertIn(b'Release new movie successfully', response.content)
+'''
 
-#s='Hello Python' print(s.find('on'))#10 print(s.find('ph'))#-1
-
+#Test the staff function: add new room to the cinema.
 class RoomManagementTest(TestCase):
     def setUp(self):
         Room.objects.create(room_id=1, row_size=5, column_size=5, create_time=datetime.now(),
@@ -118,6 +115,8 @@ class MovieManagement(TestCase):
                                      'cast': 'Sam Worthington', 'introduction': 'this is a good movie'})
         self.assertIn(b'Add new movie fails,no poster upload', response.content)
 
+#Test the ajax function in the staff page
+    #staff click the release ID to check how many people have booked this movie.
     def test_check_release_order(self):
         session = self.client.session
         session['staffuser'] = 'staffuser'
@@ -125,6 +124,7 @@ class MovieManagement(TestCase):
         response = self.client.post('/my_staff/release/checkOrderNum/12345678')
         self.assertIn(b'{"number": 1}', response.content)
 
+#Test staff's function about publish and manage announcements.
 class AnnouncementManagement(TestCase):
 
     def setUp(self):
