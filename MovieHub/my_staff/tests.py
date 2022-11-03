@@ -75,14 +75,14 @@ class ReleaseInformation(TestCase):
         response = self.client.post('/my_staff/release/insert',
                                     {'movieId': '12345678', 'roomId': '1', 'price': '2',
                                      'releaseTime': '2023-02-21T19:28'})
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Release new movie successfully', response.content)
 
     def test_release_movie_fail(self):
         session = self.client.session
         session['staffuser'] = 'staffuser'
         session.save()
         response = self.client.post('/my_staff/release/insert',
-                                    {'movieId': '12345678', 'roomId': '1', 'price': '2',
+                                    {'movieId': '12345678', 'roomId': '155', 'price': '2',
                                      'releaseTime': '2023-02-21T19:28'})
         self.assertIn(b'Room ID dose not exist, releasing new movie fails', response.content)
 

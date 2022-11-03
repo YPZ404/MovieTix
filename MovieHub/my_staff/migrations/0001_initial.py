@@ -14,12 +14,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Seat',
             fields=[
+                ('id', models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='ID')),
                 ('release_id', models.IntegerField()),
                 ('room_id', models.IntegerField()),
                 ('row_id', models.IntegerField()),
                 ('column_id', models.IntegerField()),
                 ('is_available', models.IntegerField()),
-                ('id', models.IntegerField(primary_key=True, serialize=False)),
             ],
             options={
                 'db_table': 'Seat',
