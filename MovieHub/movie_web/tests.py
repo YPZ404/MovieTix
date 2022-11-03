@@ -25,3 +25,16 @@ class CustomerLoginTest(TestCase):
         response = self.client.post('/movie_web/login',
                                     {'username': 'AnthonyTan', 'password': '1234567', 'verifyCode': '2333'})
         self.assertIn(b'password is incorrect', response.content)
+
+class CustomerRegisterTest(TestCase):
+    def test_register_success(self):
+        response = self.client.post('/movie_web/doRegister',
+                                    {'username': 'AnthonyTan', 'password': '1234567', 'name': 'Tan',
+                                     'email': 'hello@163.com', 'verifyCode': '2333'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_success(self):
+        response = self.client.post('/movie_web/doRegister',
+                                    {'username': 'AnthonyTan', 'password': '1234567', 'name': 'Tan',
+                                     'email': 'hello', 'verifyCode': '2333'})
+        self.assertIn(b'Email is invalid', response.content)
