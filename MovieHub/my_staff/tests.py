@@ -59,7 +59,7 @@ class ReleaseManagement(TestCase):
         result = Release.objects.get(release_id=12345678)
         self.assertEqual(result.is_delete, 1)
 
-'''class ReleaseInformation(TestCase):
+class ReleaseInformation(TestCase):
 
     def setUp(self):
         Movie.objects.create(movie_id=12345678, movie_name="avatar", duration=120, type="adventure",
@@ -75,9 +75,16 @@ class ReleaseManagement(TestCase):
         response = self.client.post('/my_staff/release/insert',
                                     {'movieId': '12345678', 'roomId': '1', 'price': '2',
                                      'releaseTime': '2023-02-21T19:28'})
-        print(response.content)
-        #self.assertIn(b'Release new movie successfully', response.content)
-'''
+        self.assertEqual(response.status_code, 200)
+
+    def test_release_movie_fail(self):
+        session = self.client.session
+        session['staffuser'] = 'staffuser'
+        session.save()
+        response = self.client.post('/my_staff/release/insert',
+                                    {'movieId': '12345678', 'roomId': '1', 'price': '2',
+                                     'releaseTime': '2023-02-21T19:28'})
+        self.assertIn(b'Room ID dose not exist, releasing new movie fails', response.content)
 
 #Test the staff function: add new room to the cinema.
 class RoomManagementTest(TestCase):
@@ -91,9 +98,6 @@ class RoomManagementTest(TestCase):
         session.save()
         response = self.client.post('/my_staff/room/insert', {'roomId': '2', 'rowSize': '5', 'columnSize': '5'})
         self.assertIn(b'Add new room successfully', response.content)
-
-
-
 
 class MovieManagement(TestCase):
     def setUp(self):
