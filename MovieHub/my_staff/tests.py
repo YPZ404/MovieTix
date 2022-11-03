@@ -18,7 +18,7 @@ class ModelTest(TestCase):
     # test initialization
 
     def test_seat_model(self):
-        Seat.objects.create(release_id=123123, room_id=1, row_id=3, column_id=4, is_available=0)
+        Seat.objects.create(id=1, release_id=123123, room_id=1, row_id=3, column_id=4, is_available=0)
         result = Seat.objects.get(release_id=123123, row_id=3, column_id=4)
         self.assertEqual(result.room_id, 1)
         self.assertEqual(result.is_available, 0)
