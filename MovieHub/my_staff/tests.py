@@ -59,6 +59,8 @@ class ReleaseManagement(TestCase):
         result = Release.objects.get(release_id=12345678)
         self.assertEqual(result.is_delete, 1)
 
+#Test staff's function to release new movie
+ #(That is, to decide when a certain movie will be shown.)
 class ReleaseInformation(TestCase):
 
     def setUp(self):
@@ -99,6 +101,7 @@ class RoomManagementTest(TestCase):
         response = self.client.post('/my_staff/room/insert', {'roomId': '2', 'rowSize': '5', 'columnSize': '5'})
         self.assertIn(b'Add new room successfully', response.content)
 
+#Test the staff's function to manage the existing movie resources of the cinema.
 class MovieManagement(TestCase):
     def setUp(self):
         Movie.objects.create(movie_id=12345678, movie_name="avatar", duration=120, type="adventure",
