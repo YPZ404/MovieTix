@@ -7,11 +7,8 @@ from my_admin.models import Release
 from my_admin.models import Customer
 from my_admin.models import Order
 from datetime import datetime, timedelta
-from django.test import Client
 
-
-# Create your tests here.
-
+#Test the model of Admin
 class ModelTest(TestCase):
     # test initialization
     def test_staff_model(self):
@@ -66,7 +63,7 @@ class ModelTest(TestCase):
         self.assertEqual(result.seat_num, 2)
         self.assertEqual(result.release_id, 22222222)
 
-
+#Test the admin login function
 class StaffLoginTest(TestCase):
     def setUp(self):
         Staff.objects.create(staff_id=12345678, password_hash='b965bef1d3d0149616db267002fad7cd',
@@ -101,8 +98,7 @@ class StaffLoginTest(TestCase):
                                      'email': 'test@163.com'})
         self.assertIn(b'Update Successfully', response.content)
 
-
-
+#Test the admin function: add new room to the cinema.
 class RoomManagementTest(TestCase):
     def setUp(self):
         Room.objects.create(room_id=1, row_size=5, column_size=5, create_time=datetime.now(),
@@ -123,7 +119,7 @@ class RoomManagementTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Add new room fails', response.content)
 
-
+#Test the admin's function to manage the existing movie resources of the cinema.
 class MovieManagement(TestCase):
     def setUp(self):
         Movie.objects.create(movie_id=12345678, movie_name="avatar", duration=120, type="adventure",
@@ -159,7 +155,7 @@ class MovieManagement(TestCase):
         response = self.client.post('/my_admin/movie/checkReleaseNum/12345678')
         self.assertIn(b'{"number": 1}', response.content)
 
-
+#Test admin's function about publish and manage announcements.
 class AnnouncementManagement(TestCase):
 
     def setUp(self):
@@ -182,7 +178,7 @@ class AnnouncementManagement(TestCase):
         num = Announcement.objects.all().__len__()
         self.assertEqual(num, 1)
 
-
+#Test admin's function to manage released movies.
 class ReleaseManagement(TestCase):
 
     def setUp(self):
