@@ -1,4 +1,4 @@
-# ELEC9609-Group10
+# ELEC3609-Group10
 
 # Welcome to MovieHub
 
