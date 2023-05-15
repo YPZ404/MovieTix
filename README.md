@@ -50,7 +50,7 @@ To inform your clients the latest release or other information, you can post an 
 You can also check the list of the staff and orders, however as a staff, you do not have right to modify them.
 
 ##  How to use the code in your computer
-Please clone the code using: git clone https://github.sydney.edu.au/2022-INTERNET-SOFTWARE-PLATFORM/ELEC9609-Group10.git
+Please clone the code from this repository.
 ##### Create table in your database.
 Firstly in settings.py check the database name and the password, change that to your password and account.<br>
 There are two way to init the database.<br>
